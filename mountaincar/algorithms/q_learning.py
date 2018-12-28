@@ -1,6 +1,6 @@
+import gym
 import pylab
 import numpy as np
-import gym
 
 n_states = 50
 q_table = np.zeros((n_states, n_states, 3))
@@ -36,7 +36,6 @@ def find_policy():
 if __name__ == "__main__":
     env = gym.make('MountainCar-v0')
 
-    scores, episodes = [], []
     steps = 0
 
     for episode in range(500000):
@@ -60,10 +59,6 @@ if __name__ == "__main__":
                 epsilon = max(epsilon, 0.1)
 
             if done:
-                scores.append(score)
-                episodes.append(episode)
-                pylab.plot(episodes, scores, 'b')
-                pylab.savefig("./save_graph/mountaincar_q_learning.png")
                 break
 
         if episode % 100 == 0:
