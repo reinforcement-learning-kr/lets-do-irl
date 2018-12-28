@@ -2,12 +2,12 @@ import pylab
 import numpy as np
 import gym
 
-learning_rate = 0.01
+n_states = 50
+q_table = np.zeros((n_states, n_states, 3))
+learning_rate = 0.03
 gamma = 0.9
 epsilon = 1.0
 initial_exploration = 10000
-n_states = 50
-q_table = np.zeros((n_states, n_states, 3))
 
 def obs_to_state(env, state):
     env_low = env.observation_space.low
