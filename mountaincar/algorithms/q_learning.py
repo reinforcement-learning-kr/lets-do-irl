@@ -6,8 +6,6 @@ n_states = 50
 q_table = np.zeros((n_states, n_states, 3))
 learning_rate = 0.03
 gamma = 0.9
-epsilon = 1.0
-initial_exploration = 10000
 
 def obs_to_state(env, state):
     env_low = env.observation_space.low
@@ -18,11 +16,7 @@ def obs_to_state(env, state):
     return position, velocity
 
 def get_action(state):
-    if np.random.rand() > epsilon:
-        action = env.action_space.sample()
-    else:
-        action = np.argmax(q_table[position][velocity])
-    return action
+    return np.argmax(q_table[position][velocity])
 
 def update_q_table(position, velocity, action, reward, next_position, next_velocity):
     q_1 = q_table[position][velocity][action]
@@ -38,7 +32,7 @@ if __name__ == "__main__":
 
     steps = 0
 
-    for episode in range(500000):
+    for episode in range(600000):
         state = env.reset()
         score = 0
 
@@ -53,10 +47,6 @@ if __name__ == "__main__":
 
             next_position, next_velocity = obs_to_state(env, next_state)
             update_q_table(position, velocity, action, reward, next_position, next_velocity)
-
-            if steps > initial_exploration:
-                epsilon -= 0.00005
-                epsilon = max(epsilon, 0.1)
 
             if done:
                 break

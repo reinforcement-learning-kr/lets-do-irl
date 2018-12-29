@@ -1,10 +1,8 @@
-import random
 import numpy as np
 from cvxopt import matrix, solvers
 
-def irl(n_states, n_actions, transition_probability, policy, discount, Rmax, l1):
+def lp_irl(n_states, n_actions, transition_probability, policy, discount, Rmax, l1):
     """
-    Find a reward function with inverse RL as described in Ng & Russell, 2000.
 
     n_states: Number of states. int.
     n_actions: Number of actions. int.
@@ -24,6 +22,7 @@ def irl(n_states, n_actions, transition_probability, policy, discount, Rmax, l1)
     # for legacy reasons; here, we reorder axes to fix this. We expect the
     # new probabilities to be of the shape (A, N, N).
     transition_probability = np.transpose(transition_probability, (1, 0, 2))
+    print("transition_probability_1", transition_probability)
 
     def T(a, s):
         """
@@ -41,7 +40,10 @@ def irl(n_states, n_actions, transition_probability, policy, discount, Rmax, l1)
     # Minimise c . x.
     c = -np.hstack([np.zeros(n_states), np.ones(n_states),
                     -l1*np.ones(n_states)])
+    print("c", c)
     zero_stack1 = np.zeros((n_states*(n_actions-1), n_states))
+    print("zero_stack1", zero_stack1)
+    
     T_stack = np.vstack([
         -T(a, s)
         for s in range(n_states)
