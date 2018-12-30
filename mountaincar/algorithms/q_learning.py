@@ -10,9 +10,9 @@ gamma = 0.9
 def idx_to_state(env, state):
     env_low = env.observation_space.low 
     env_high = env.observation_space.high 
-    env_idx = (env_high - env_low) / n_states 
-    position = int((state[0] - env_low[0]) / env_idx[0])
-    velocity = int((state[1] - env_low[1]) / env_idx[1])
+    env_distance = (env_high - env_low) / n_states 
+    position = int((state[0] - env_low[0]) / env_distance[0])
+    velocity = int((state[1] - env_low[1]) / env_distance[1])
     return position, velocity
 
 def get_action(state):
