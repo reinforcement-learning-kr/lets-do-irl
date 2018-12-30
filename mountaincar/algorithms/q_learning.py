@@ -1,13 +1,13 @@
-import gym
-import pylab
 import numpy as np
+import gym
 
 n_states = 50
-q_table = np.zeros((n_states, n_states, 3))
+n_actions = 3
+q_table = np.zeros((n_states, n_states, n_actions))
 learning_rate = 0.03
 gamma = 0.9
 
-def idx_to_state(env, state):
+def idx_to_state(env, state, n_states):
     env_low = env.observation_space.low 
     env_high = env.observation_space.high 
     env_distance = (env_high - env_low) / n_states 
@@ -22,9 +22,6 @@ def update_q_table(position, velocity, action, reward, next_position, next_veloc
     q_1 = q_table[position][velocity][action]
     q_2 = reward + gamma * max(q_table[next_position][next_velocity])
     q_table[position][velocity][action] += learning_rate * (q_2 - q_1)
-
-def find_policy():
-    return q_table[position][velocity]
 
 
 if __name__ == "__main__":

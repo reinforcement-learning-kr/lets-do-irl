@@ -1,48 +1,60 @@
 import numpy as np
-import matplotlib.pyplot as plt
+import gym
 
-import irl.maxent as maxent
-import irl.mdp.gridworld as gridworld
+import make_expert
+from algorithms import q_learning, maxent
 
-def main(grid_size, discount, n_trajectories, epochs, learning_rate):
-    """
-    Run maximum entropy inverse reinforcement learning on the gridworld MDP.
-
-    Plots the reward function.
-
-    grid_size: Grid size. int.
-    discount: MDP discount factor. float.
-    n_trajectories: Number of sampled trajectories. int.
-    epochs: Gradient descent iterations. int.
-    learning_rate: Gradient descent learning rate. float.
-    """
-
-    wind = 0.3
-    trajectory_length = 3*grid_size
-
-    gw = gridworld.Gridworld(grid_size, wind, discount)
-    trajectories = gw.generate_trajectories(n_trajectories,
-                                            trajectory_length,
-                                            gw.optimal_policy)
-    # print(trajectories)
-    feature_matrix = gw.feature_matrix()
+def main(env):
+    n_states = 50 
+    n_actions = 3
+    q_learning_rate
+    gamma = 0.9
+    epochs = 300
+    theta_learning_rate = 0.01
     
-    # print("feature[0]", feature_matrix.shape)
-    ground_r = np.array([gw.reward(s) for s in range(gw.n_states)])
-    # t = maxent.find_expected_svf(25, r, n_actions, discount, transition_probability, trajectories)
-    r = maxent.irl(feature_matrix, gw.n_actions, discount,
-        gw.transition_probability, trajectories, epochs, learning_rate)
-    # print("dfdfd", maxent.)
-    plt.subplot(1, 2, 1)
-    plt.pcolor(ground_r.reshape((grid_size, grid_size)))
-    plt.colorbar()
-    plt.title("Groundtruth reward")
-    plt.subplot(1, 2, 2)
-    plt.pcolor(r.reshape((grid_size, grid_size)))
-    plt.colorbar()
-    plt.title("Recovered reward")
-    plt.show()
+    trejectories = np.load(file="make_expert/expert_trajectories.npy")
+    # trajectories = (20, 100, 4)
+    print("trejectories.shape", trejectories.shape)
+    
+    # feature_matrix = (50, 50)
+    feature_matrix = np.eye((n_states), dtype=int)
+    print("feature_matrix", feature_matrix)
+    print("feature_matrix.shape", feature_matrix.shape)
+
+    q_table = np.zeros((n_states, n_states, n_actions))
+    # print("q_table", q_table)
+    print("q_table.shape", q_table.shape)
+
+    reward = maxent.maxent_irl(feature_matrix, n_actions, gamma, 
+                                trajectories, epochs, theta_learning_rate, env)
+
+    return reward
 
 if __name__ == '__main__':
-    main(5, 0.01, 20, 200, 0.01)
+    env = gym.make('MountainCar-v0')
+    main(env)
+
+    for episode in range(600000):
+        state = env.reset()
+        score = 0
+
+        while True:
+            # env.render()
+            position, velocity = idx_to_state(env, state)
+            action = get_action(q_table[position][velocity])
+            next_state, reward, done, _ = env.step(action)
+
+            next_position, next_velocity = idx_to_state(env, next_state)
+            update_q_table(position, velocity, action, reward, next_position, next_velocity)
+
+            score += reward
+            state = next_state
+            
+            if done:
+                break
+
+        if episode % 100 == 0:
+            print('{} episode | score: {:.1f}'.format(
+                episode, score))
+    
 
