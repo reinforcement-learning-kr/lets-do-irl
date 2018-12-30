@@ -50,4 +50,4 @@ for episode in range(20): # n_trajectories
 np_trajectories = np.array(trajectories, float)
 print("np_trajectories.shape", np_trajectories.shape)
 
-np.save("mountaincar_expert", arr=np_trajectories)
+np.save("expert_trajectories", arr=np_trajectories)
