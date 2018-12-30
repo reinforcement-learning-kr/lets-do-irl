@@ -1,5 +1,6 @@
 import gym
 import readchar
+import numpy as np
 
 # # MACROS
 Push_Left = 0
@@ -13,24 +14,40 @@ arrow_keys = {
     '\x1b[C': Push_Right}
 
 env = gym.make('MountainCar-v0')
-env.render()
-env.reset()
 
-cnt = 0
+trajectories = []
+episode_step = 0
 
-while True:
-    key = readchar.readkey()
-    if key not in arrow_keys.keys():
-        print("Game aborted!")
-        break
+for episode in range(20): # n_trajectories
+    trajectory = []
+    step = 0
 
-    action = arrow_keys[key]
-    state, reward, done, _ = env.step(action)
-    env.render() 
-    print("State: ", state, "Action: ", action,
-          "Reward: ", reward, "Iteration Count", cnt)
-    cnt += 1
+    env.reset()
+    print("episode_step", episode_step)
 
-    if done:
-        print("Finished with reward", reward)
-        break
+    for _ in range(100): # trajectory_length
+        env.render()
+        print("step", step)
+
+        key = readchar.readkey()
+        if key not in arrow_keys.keys():
+            break
+
+        action = arrow_keys[key]
+        state, reward, done, _ = env.step(action)
+        # print("State : {} | Action : {} | Reward : {} | Step : {}".format(
+        #         state, action, reward, step))
+        step += 1
+
+        trajectory.append((state[0], state[1], action, reward))
+
+        if done:
+            break
+
+    episode_step += 1
+    trajectories.append(trajectory)
+    
+np_trajectories = np.array(trajectories, float)
+print("np_trajectories.shape", np_trajectories.shape)
+
+np.save("mountaincar_expert", arr=np_trajectories)
