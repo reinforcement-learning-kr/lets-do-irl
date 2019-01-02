@@ -1,40 +1,41 @@
 import numpy as np
 from itertools import product
-import q_learning
+import maxent_q_learning
 
 def maxent_irl(grid_states, n_actions, q_table, gamma, 
                 trajectories, epochs, learning_rate, env):
-    reward = np.zeros((grid_states, n_actions, grid_states))
-    n_states = feature_matrix.shape[0]
+    # Initialise weights.
+    theta = np.random.uniform(size=(grid_states,))
     
     # Calculate the feature expectations \tilde{f}. 
-    feature_expectations = find_feature_expectations(feature_matrix, trajectories)
+    feature_expectations = find_feature_expectations(grid_states, trajectories)
 
     # Gradient descent on theta.
     for i in range(epochs):
-        reward = feature_matrix.dot(theta)
+        reward = np.zeros((grid_states, n_actions, grid_states))
 
-        expected_svf = find_expected_svf(n_states, n_actions, reward, gamma, q_table, trajectories)
-        gradient = feature_expectations - feature_matrix.T.dot(expected_svf)
+        expected_svf = find_expected_svf(grid_states, n_actions, reward, gamma, q_table, trajectories)
+        gradient = feature_expectations - grid_states.T.dot(expected_svf)
         reward += learning_rate * gradient
     return reward # (2500, 3, 2500)
 
 
-def find_feature_expectations(feature_matrix, trajectories):
+def find_feature_expectations(grid_states, trajectories):
     """ Calculate the feature expectations \tilde{f}. """
-    feature_expectations = np.zeros(feature_matrix.shape[0])
+    feature_expectations = np.zeros(grid_states.shape)
     
     # trajectories = (20, 100, 4)
     for trajectory in trajectories:
-        for state, _, _ in trajectory: # state, action, reward
-            idx_to_state
-            feature_expectations += feature_matrix[state]
+        for position, velocity, _, _ in trajectory:
+            state = [position, velocity]
+            state = maxent_q_learning.idx_to_state(env, state)
+            feature_expectations += grid_states[state]
 
     feature_expectations /= trajectories.shape[0]
     return feature_expectations
 
 
-def find_expected_svf(n_states, n_actions, reward, gamma, policy, trajectories):
+def find_expected_svf(grid_states, n_actions, reward, gamma, policy, trajectories):
     """ Algorithm 1, Expected Edge Frequency Calculation """
     n_trajectories = trajectories.shape[0] # 20
     trajectory_length = trajectories.shape[1] # 100
@@ -48,6 +49,8 @@ def find_expected_svf(n_states, n_actions, reward, gamma, policy, trajectories):
     p_initial_state = start_state_count/n_trajectories
     
     expected_svf = np.tile(p_initial_state, (trajectory_length, 1)).T
+
+    policy = maxent_q_learning.find_policy()
 
     # Step 5 in Forward pass
     for t in range(1, trajectory_length):
