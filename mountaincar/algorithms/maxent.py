@@ -2,12 +2,10 @@ import numpy as np
 from itertools import product
 import q_learning
 
-def maxent_irl(feature_matrix, n_actions, q_table, gamma, 
+def maxent_irl(grid_states, n_actions, q_table, gamma, 
                 trajectories, epochs, learning_rate, env):
+    reward = np.zeros((grid_states, n_actions, grid_states))
     n_states = feature_matrix.shape[0]
-    
-    # Initialise weights.
-    theta = np.random.uniform(size=(n_states,))
     
     # Calculate the feature expectations \tilde{f}. 
     feature_expectations = find_feature_expectations(feature_matrix, trajectories)
@@ -18,8 +16,8 @@ def maxent_irl(feature_matrix, n_actions, q_table, gamma,
 
         expected_svf = find_expected_svf(n_states, n_actions, reward, gamma, q_table, trajectories)
         gradient = feature_expectations - feature_matrix.T.dot(expected_svf)
-        theta += learning_rate * gradient
-    return feature_matrix.dot(theta).reshape((n_states,))
+        reward += learning_rate * gradient
+    return reward # (2500, 3, 2500)
 
 
 def find_feature_expectations(feature_matrix, trajectories):
@@ -28,10 +26,9 @@ def find_feature_expectations(feature_matrix, trajectories):
     
     # trajectories = (20, 100, 4)
     for trajectory in trajectories:
-        for position, velocity, _, _ in trajectory: # position, velocity, action, reward
-            state = [position, velocity]
-            position_idx, velocity_idx = q_learning.idx_to_state(env, state, n_states)
-            feature_expectations += feature_matrix[position_idx, velocity_idx]
+        for state, _, _ in trajectory: # state, action, reward
+            idx_to_state
+            feature_expectations += feature_matrix[state]
 
     feature_expectations /= trajectories.shape[0]
     return feature_expectations
