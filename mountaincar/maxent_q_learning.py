@@ -74,7 +74,7 @@ def main():
                 # (625,)
                 irl_reward = maxent.maxent_irl(feature_matrix, n_actions, gamma, 
                                                 trajectories, epochs, theta_learning_rate)
-                irl_reward = irl_reward[next_state]
+                irl_reward = irl_reward[next_state_idx]
                 update_q_table(state_idx, action, irl_reward, next_state_idx)
             else:
                 update_q_table(state_idx, action, reward, next_state_idx)      
