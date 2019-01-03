@@ -50,9 +50,9 @@ def main():
             state_idx = idx_to_state(env, state)
             action = get_action(q_table[state_idx])
             next_state, _, done, _ = env.step(action)
-            
-            # (2500,)        
-            next_state_idx = idx_to_state(env, next_state)                 
+                    
+            next_state_idx = idx_to_state(env, next_state)
+            # (2500,)
             irl_reward = maxent.maxent_irl(feature_matrix, n_actions, gamma, 
                                             trajectories, epochs, theta_learning_rate)
             reward = irl_reward[next_state_idx]
@@ -65,8 +65,7 @@ def main():
                 break
 
         if episode % 100 == 0:
-            print('{} episode | score: {:.1f}'.format(
-                episode, score))
+            print('{} episode | score : {:.1f}'.format(episode, score))
 
 if __name__ == '__main__':
     main()

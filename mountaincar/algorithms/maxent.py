@@ -4,7 +4,7 @@ from maxent_q_learning import find_policy
 
 def maxent_irl(feature_matrix, n_actions, gamma, 
                 trajectories, epochs, learning_rate):
-    # n_states : 2500
+    # 2500
     n_states = feature_matrix.shape[0]
     
     # Initialise weights.
@@ -40,7 +40,8 @@ def find_expected_svf(n_states, n_actions, reward, gamma, trajectories):
     n_trajectories = trajectories.shape[0] # 20
     trajectory_length = trajectories.shape[1] # 100
     
-    # Step 3 in Local action probability computation & Step 4 in Forward pass 
+    # Step 3 in Local action probability computation 
+    # & Step 4 in Forward pass 
     start_state_count = np.zeros(n_states)
 
     for trajectory in trajectories:
