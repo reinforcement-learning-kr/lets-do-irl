@@ -7,8 +7,6 @@ from algorithms.rlstep import q_learning  # get the Reinforcement learner
 import gym
 
 
-TRAJECTORIES = 100000  # number of RL training trajectories per iteration of IRL
-
 FEATURES = 50
 
 # (20, 100, 4)
@@ -16,10 +14,10 @@ trejectories = np.load(file="make_expert/expert_trajectories.npy")
 
 
 class irlAgent:
-    def __init__(self, env, randomFE, expertFE, epsilon, num_trajectories):
+    def __init__(self, env, randomFE, expertFE, epsilon):
         self.randomPolicy = randomFE
         self.expertPolicy = expertFE
-        self.num_trajectories = num_trajectories
+
         self.epsilon = epsilon  # termination when t<0.1
         self.randomT = np.linalg.norm(
             np.asarray(self.expertPolicy) - np.asarray(self.randomPolicy))  # norm of the diff in expert and random
@@ -94,5 +92,6 @@ if __name__ == '__main__':
     # ^feature expectations for the "follow Yellow obstacles" behavior
 
     epsilon = 0.1
-    irlearner = irlAgent(env, randomPolicyFE, expertPolicyFE, epsilon, TRAJECTORIES)
+    irlearner = irlAgent(env, randomPolicyFE, expertPolicyFE, epsilon)
     print("The Optimal Weight is ::",irlearner.optimalWeightFinder())
+
