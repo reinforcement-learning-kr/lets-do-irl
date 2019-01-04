@@ -60,7 +60,7 @@ def main():
 
     episodes, scores = [], []
     
-    for episode in range(100000):
+    for episode in range(1000000):
         state = env.reset()
         score = 0
 
@@ -94,8 +94,7 @@ def main():
 
         if episode % 30 == 0:
             print('{} episode | score : {:.1f}'.format(episode, score))
-
-    np.save("maxent_q_table", arr=q_table)
+            np.save("maxent_q_table", arr=q_table)
 
 if __name__ == '__main__':
     main()
