@@ -1,18 +1,19 @@
 import gym
+import pylab
 import numpy as np
 
 from algorithms import maxent
 
-n_states = 625 # position - 30, velocity - 30
+n_states = 400 # position - 20, velocity - 20
 n_actions = 3
-one_feature = 25 # number of state per one feature
+one_feature = 20 # number of state per one feature
 
-feature_matrix = np.eye((n_states)) # (625, 625)
-q_table = np.zeros((n_states, n_actions)) # (625, 3)
+feature_matrix = np.eye((n_states)) # (400, 400)
+q_table = np.zeros((n_states, n_actions)) # (400, 3)
 
 gamma = 0.9
 q_learning_rate = 0.03
-epochs = 10
+epochs = 5
 theta_learning_rate = 0.01
 
 def idx_trajectories(env, one_feature):
@@ -56,34 +57,41 @@ def find_policy():
 def main():
     env = gym.make('MountainCar-v0')
     trajectories = idx_trajectories(env, one_feature)
+
+    episodes, scores = [], []
     
-    for episode in range(500000):
+    for episode in range(100000):
         state = env.reset()
         score = 0
-        step = 0
 
+        if episode % 50 == 0 and episode != 0:
+            # (400,)
+            irl_rewards = maxent.maxent_irl(feature_matrix, n_actions, gamma, 
+                                                trajectories, epochs, theta_learning_rate)
+            
         while True:
             # env.render()
-            # print(step, "step")
             state_idx = idx_to_state(env, state)
             action = np.argmax(q_table[state_idx])
             next_state, reward, done, _ = env.step(action)
-                    
+            
             next_state_idx = idx_to_state(env, next_state)
-            if step % 100 == 0 and step != 0:
-                # (625,)
-                irl_reward = maxent.maxent_irl(feature_matrix, n_actions, gamma, 
-                                                trajectories, epochs, theta_learning_rate)
-                irl_reward = irl_reward[next_state_idx]
+            if episode % 50 == 0 and episode != 0:
+                irl_reward = irl_rewards[next_state_idx]
                 update_q_table(state_idx, action, irl_reward, next_state_idx)
+                score += irl_reward
             else:
                 update_q_table(state_idx, action, reward, next_state_idx)      
+                score += reward
             
-            score += reward
             state = next_state
-            step += 1
-
+            
             if done:
+                scores.append(score)
+                episodes.append(episode)
+
+                pylab.plot(episodes, scores, 'b')
+                pylab.savefig("./learning_curves/maxent_q_learning.png")
                 break
 
         if episode % 100 == 0:
