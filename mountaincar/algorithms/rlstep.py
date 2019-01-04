@@ -1,15 +1,7 @@
 import numpy as np
 import random
-import csv
-import os.path
-import timeit
 import gym
 from algorithms.feature_estimate import FeatureEstimate
-
-NUM_INPUT = 50
-GAMMA = 0.9  # Forgetting.
-TUNING = False  # If False, just use arbitrary, pre-selected params.
-TRAIN_FRAMES = 100000 # to train for 100K frames in total
 
 def idx_to_state(env, state):
     env_low = env.observation_space.low
@@ -21,8 +13,8 @@ def idx_to_state(env, state):
     return state_idx
 
 def q_learning(weights, i):
-
-    gamma = 0.9
+    print("Iternation %d :: Start Q-learning.\n" % (i))
+    gamma = 0.99
     q_learning_rate = 0.03
 
     n_states = 2500  # position - 50, velocity - 50
@@ -32,24 +24,26 @@ def q_learning(weights, i):
     # Create a new game instance.
     env = gym.make('MountainCar-v0')
 
-    # Get initial state by doing nothing and getting the state.
-    state = env.reset()
-
     # Feature estimator
     feature_estimate = FeatureEstimate(env, len(weights))
 
-    # Let's time it.
-    start_time = timeit.default_timer()
-
     # Run the frames.
-    for episode in range(1000):
+    count = 0
+    while count < 10:
         state = env.reset()
         score = 0
+        epsilon = 0.1
+        episode = 1
+
 
         while True:
-            # env.render()
+            #env.render()
             state_idx = idx_to_state(env, state)
-            action = np.argmax(q_table[state_idx])
+            if random.random() < epsilon:
+                action = np.random.randint(0, 2)  # random #3
+            else:
+                action = np.argmax(q_table[state_idx])
+
             next_state, _, done, _ = env.step(action)
 
             next_state_idx = idx_to_state(env, next_state)
@@ -64,11 +58,17 @@ def q_learning(weights, i):
             score += irl_reward
             state = next_state
 
+
+            if state[0] >= 0.5:
+                count += 1
+                print("TOUCH DOWN :: %d \n" % (count))
+
             if done:
+                episode += 1
                 break
 
         if episode % 100 == 0:
             print('{} episode | score: {:.1f}'.format(episode, score))
 
-    print("Complete Q-learning - %d" % (i))
+    print("Iternation %d :: Complete Q-learning.\n" % (i))
     return q_table
