@@ -65,10 +65,9 @@ def main():
         score = 0
 
         if episode % 100 == 0 and episode != 0:
-            # (400,)
             irl_rewards = maxent.maxent_irl(feature_matrix, n_actions, gamma, 
                                                 trajectories, epochs, theta_learning_rate)
-            
+
         while True:
             # env.render()
             state_idx = idx_to_state(env, state)
@@ -95,6 +94,8 @@ def main():
 
         if episode % 30 == 0:
             print('{} episode | score : {:.1f}'.format(episode, score))
+
+    np.save("maxent_q_table", arr=q_table)
 
 if __name__ == '__main__':
     main()

@@ -2,14 +2,13 @@ import numpy as np
 from itertools import product
 from maxent_q_learning import find_policy
 
-def maxent_irl(feature_matrix, n_actions, gamma, 
-                trajectories, epochs, learning_rate):
+def maxent_irl(feature_matrix, n_actions, gamma, trajectories, epochs, learning_rate):
     # 400
     n_states = feature_matrix.shape[0]
     
     # Initialise weights.
-    theta = np.random.uniform(size=(n_states,))
-
+    theta = -(np.random.uniform(size=(n_states,)))
+    
     # Calculate the feature expectations \tilde{f}. 
     feature_expectations = find_feature_expectations(feature_matrix, trajectories)
 
@@ -20,6 +19,10 @@ def maxent_irl(feature_matrix, n_actions, gamma,
         expected_svf = find_expected_svf(n_states, n_actions, reward, gamma, trajectories)
         gradient = feature_expectations - feature_matrix.T.dot(expected_svf)
         theta += learning_rate * gradient
+
+    for j in range(len(theta)):
+        if theta[j] > 0:
+            theta[j] = 0
 
     return feature_matrix.dot(theta).reshape((n_states,))
 
