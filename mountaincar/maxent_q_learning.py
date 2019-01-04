@@ -20,18 +20,18 @@ def idx_trajectories(env, one_feature):
     env_high = env.observation_space.high   
     env_distance = (env_high - env_low) / one_feature  
 
-    raw_trej = np.load(file="make_expert/expert_trajectories.npy")
-    trajectories = np.zeros((len(raw_trej), len(raw_trej[0]), 3))
+    raw_traj = np.load(file="make_expert/expert_trajectories.npy")
+    trajectories = np.zeros((len(raw_traj), len(raw_traj[0]), 3))
 
-    for x in range(len(raw_trej)):
-        for y in range(len(raw_trej[0])):
-            position_idx = int((raw_trej[x][y][0] - env_low[0]) / env_distance[0])
-            velocity_idx = int((raw_trej[x][y][1] - env_low[1]) / env_distance[1])
+    for x in range(len(raw_traj)):
+        for y in range(len(raw_traj[0])):
+            position_idx = int((raw_traj[x][y][0] - env_low[0]) / env_distance[0])
+            velocity_idx = int((raw_traj[x][y][1] - env_low[1]) / env_distance[1])
             state_idx = position_idx + velocity_idx * one_feature
 
             trajectories[x][y][0] = state_idx
-            trajectories[x][y][1] = raw_trej[x][y][2] 
-            trajectories[x][y][2] = raw_trej[x][y][3] 
+            trajectories[x][y][1] = raw_traj[x][y][2] 
+            trajectories[x][y][2] = raw_traj[x][y][3] 
             
     return trajectories
 
