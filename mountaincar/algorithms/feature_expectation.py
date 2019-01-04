@@ -1,16 +1,9 @@
-"""
-Once a Q-table is learned, use this to play it. that is run/exploit a policy to get the feature expectations of the policy
-"""
-
 import numpy as np
-import sys
-import gym
 from algorithms.feature_estimate import FeatureEstimate
 
-TRAJECTORIES = 100
-
-NUM_STATES = 8
-GAMMA = 0.9
+TRAJECTORIES = 20
+STEPS = 100
+GAMMA = 0.99
 
 def idx_to_state(env, state):
     env_low = env.observation_space.low
@@ -26,24 +19,24 @@ def calcNewFE(env, q_table, weights):
     featureExpectations = np.zeros(len(weights))
     feature_estimate = FeatureEstimate(env, len(weights))
     car_steps = 0
-    while True:
-        car_steps += 1
+    for m in range(TRAJECTORIES):
+        while True:
+            car_steps += 1
 
-        # Choose action.
-        state_idx = idx_to_state(env, state)
-        action = (np.argmax(q_table[state_idx]))
+            # Choose action.
+            state_idx = idx_to_state(env, state)
+            action = (np.argmax(q_table[state_idx]))
 
-        # Take action.
-        next_state, _, done, _ = env.step(action)
+            # Take action.
+            next_state, _, done, _ = env.step(action)
 
-        features = feature_estimate.get_features(next_state)
-        featureExpectations += (GAMMA**(car_steps))*np.array(features)
+            features = feature_estimate.get_features(next_state)
+            featureExpectations += (GAMMA**(car_steps))*np.array(features)
 
-        if car_steps % TRAJECTORIES == 0 or done == True:
-            print("Current steps: %d trajectories." % car_steps)
-            break
+            if car_steps % STEPS == 0 or done == True:
+                break
 
-    return featureExpectations
+    return featureExpectations / TRAJECTORIES
 
 def randomFE(num_features):
     return np.random.normal(size=num_features)
@@ -52,7 +45,7 @@ def expertFE(env, trajectories, num_features):
     featureExpectations = np.zeros(num_features)
     feature_estimate = FeatureEstimate(env, num_features)
     for m in range(len(trajectories)):
-        for car_steps in range(len(trajectories)):
+        for car_steps in range(len(trajectories[0])):
             state = trajectories[m][car_steps]
             features = feature_estimate.get_features(state)
             featureExpectations += (GAMMA**(car_steps))*np.array(features)
