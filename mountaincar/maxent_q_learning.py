@@ -15,7 +15,7 @@ q_learning_rate = 0.03
 epochs = 10
 theta_learning_rate = 0.01
 
-def trasform_traj(env, one_feature):
+def idx_trajectories(env, one_feature):
     env_low = env.observation_space.low     
     env_high = env.observation_space.high   
     env_distance = (env_high - env_low) / one_feature  
@@ -55,7 +55,7 @@ def find_policy():
 
 def main():
     env = gym.make('MountainCar-v0')
-    trajectories = trasform_traj(env, one_feature)
+    trajectories = idx_trajectories(env, one_feature)
     
     for episode in range(500000):
         state = env.reset()
