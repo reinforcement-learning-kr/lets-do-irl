@@ -62,7 +62,7 @@ def main():
     
     for episode in range(100000):
         state = env.reset()
-        score = 0
+        score = -200
 
         if episode % 100 == 0 and episode != 0:
             # (400,)
@@ -92,12 +92,12 @@ def main():
                 scores.append(score)
                 episodes.append(episode)
                 pylab.plot(episodes, scores, 'b')
-                pylab.savefig("./learning_curves/maxent_q_learning.png")
+                pylab.savefig("./learning_curves/maxent_q_learnig_reverse_reward.png")
                 break
 
         if episode % 30 == 0:
             print('{} episode | score : {:.1f}'.format(episode, score))
-            np.save("q_table_not_clipping", arr=q_table)
+            np.save("q_table_reverse_reward", arr=q_table)
             
 
 if __name__ == '__main__':
