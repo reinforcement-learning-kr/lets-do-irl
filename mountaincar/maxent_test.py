@@ -37,7 +37,7 @@ def main():
             if done:
                 break
 
-        if episode % 100 == 0:
+        if episode % 1 == 0:
             print('{} episode | score : {:.1f}'.format(episode, score))
 
 if __name__ == '__main__':
