@@ -1,7 +1,7 @@
 import gym
 import numpy as np
 
-q_table = np.load(file="maxent_q_table.npy") # (400, 3)
+q_table = np.load(file="q_table.npy") # (400, 3)
 one_feature = 20 # number of state per one feature
 gamma = 0.9
 q_learning_rate = 0.03
@@ -14,12 +14,7 @@ def idx_to_state(env, state):
     velocity_idx = int((state[1] - env_low[1]) / env_distance[1])
     state_idx = position_idx + velocity_idx * one_feature
     return state_idx
-
-def update_q_table(state, action, reward, next_state):
-    q_1 = q_table[state][action]
-    q_2 = reward + gamma * max(q_table[next_state])
-    q_table[state][action] += q_learning_rate * (q_2 - q_1)
-
+    
 def main():
     env = gym.make('MountainCar-v0')
     episodes, scores = [], []
@@ -34,17 +29,12 @@ def main():
             action = np.argmax(q_table[state_idx])
             next_state, reward, done, _ = env.step(action)
             
-            next_state_idx = idx_to_state(env, next_state)
-            update_q_table(state_idx, action, reward, next_state_idx)      
+            next_state_idx = idx_to_state(env, next_state)   
 
             score += reward
             state = next_state
             
             if done:
-                scores.append(score)
-                episodes.append(episode)
-                pylab.plot(episodes, scores, 'b')
-                pylab.savefig("./learning_curves/maxent_test.png")
                 break
 
         if episode % 100 == 0:
