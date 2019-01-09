@@ -31,8 +31,7 @@ def idx_trajectories(env, one_feature):
             state_idx = position_idx + velocity_idx * one_feature
 
             trajectories[x][y][0] = state_idx
-            trajectories[x][y][1] = raw_traj[x][y][2]
-            trajectories[x][y][2] = raw_traj[x][y][3] 
+            trajectories[x][y][1] = raw_traj[x][y][2] 
             
     return trajectories
 
