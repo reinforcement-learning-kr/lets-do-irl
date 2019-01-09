@@ -20,6 +20,15 @@ def maxent_irl(feature_matrix, n_actions, gamma, trajectories, epochs, learning_
         gradient = feature_expectations - feature_matrix.T.dot(expected_svf)
         theta += learning_rate * gradient
 
+<<<<<<< HEAD
+=======
+    '''
+    for j in range(len(theta)):
+        if theta[j] > 0:
+            theta[j] = 0
+    '''
+    
+>>>>>>> efeaab9481de834d40cbffe961b1e30405ec9fa4
     return feature_matrix.dot(theta).reshape((n_states,))
 
 def find_feature_expectations(feature_matrix, trajectories):

@@ -2,7 +2,11 @@ import gym
 import pylab
 import numpy as np
 
+<<<<<<< HEAD
 q_table = np.load(file="./results/maxent_q_table_g.npy") # (400, 3)
+=======
+q_table = np.load(file="q_table.npy") # (400, 3)
+>>>>>>> efeaab9481de834d40cbffe961b1e30405ec9fa4
 one_feature = 20 # number of state per one feature
 gamma = 0.9
 q_learning_rate = 0.03
@@ -15,12 +19,7 @@ def idx_to_state(env, state):
     velocity_idx = int((state[1] - env_low[1]) / env_distance[1])
     state_idx = position_idx + velocity_idx * one_feature
     return state_idx
-
-def update_q_table(state, action, reward, next_state):
-    q_1 = q_table[state][action]
-    q_2 = reward + gamma * max(q_table[next_state])
-    q_table[state][action] += q_learning_rate * (q_2 - q_1)
-
+    
 def main():
     env = gym.make('MountainCar-v0')
     episodes, scores = [], []
@@ -35,10 +34,16 @@ def main():
             action = np.argmax(q_table[state_idx])
             next_state, reward, done, _ = env.step(action)
             
+<<<<<<< HEAD
+=======
+            next_state_idx = idx_to_state(env, next_state)   
+
+>>>>>>> efeaab9481de834d40cbffe961b1e30405ec9fa4
             score += reward
             state = next_state
             
             if done:
+<<<<<<< HEAD
                 # scores.append(score)
                 # episodes.append(episode)
                 # pylab.plot(episodes, scores, 'b')
@@ -47,6 +52,12 @@ def main():
 
         # if episode % 30 == 0:
         print('{} episode | score : {:.1f}'.format(episode, score))
+=======
+                break
+
+        if episode % 1 == 0:
+            print('{} episode | score : {:.1f}'.format(episode, score))
+>>>>>>> efeaab9481de834d40cbffe961b1e30405ec9fa4
 
 if __name__ == '__main__':
     main()
