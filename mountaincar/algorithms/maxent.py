@@ -40,7 +40,7 @@ def find_feature_expectations(feature_matrix, trajectories):
 def find_expected_svf(n_states, n_actions, reward, gamma, trajectories):
     """ Algorithm 1, Expected Edge Frequency Calculation """
     n_trajectories = trajectories.shape[0] # 20
-    trajectory_length = trajectories.shape[1] # 100
+    trajectory_length = trajectories.shape[1] # 130
     
     # Step 3 in Local action probability computation 
     # & Step 4 in Forward pass 
