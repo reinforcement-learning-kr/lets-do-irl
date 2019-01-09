@@ -94,7 +94,7 @@ def main():
 
         if episode % 50 == 0:
             print('{} episode | score : {:.1f}'.format(episode, score))
-            np.save("./results/maxent_q_table100", arr=q_table)
+            np.save("./results/maxent_q_table", arr=q_table)
 
 if __name__ == '__main__':
     main()
