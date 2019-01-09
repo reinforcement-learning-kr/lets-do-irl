@@ -25,7 +25,7 @@ for episode in range(20): # n_trajectories
     env.reset()
     print("episode_step", episode_step)
 
-    for _ in range(100): # trajectory_length
+    while True: 
         env.render()
         print("step", step)
 
@@ -35,18 +35,18 @@ for episode in range(20): # n_trajectories
 
         action = arrow_keys[key]
         state, reward, done, _ = env.step(action)
-        # print("State : {} | Action : {} | Reward : {} | Step : {}".format(
-        #         state, action, reward, step))
-        step += 1
 
-        trajectory.append((state[0], state[1], action, reward))
-
-        if done:
+        if state[0] >= env.env.goal_position and step > 129: # trajectory_length : 130
             break
 
+        trajectory.append((state[0], state[1], action))
+        step += 1
+
+    trajectory_numpy = np.array(trajectory, float)
+    print("trajectory_numpy.shape", trajectory_numpy.shape)
     episode_step += 1
     trajectories.append(trajectory)
-    
+
 np_trajectories = np.array(trajectories, float)
 print("np_trajectories.shape", np_trajectories.shape)
 
