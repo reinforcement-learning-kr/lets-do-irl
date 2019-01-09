@@ -13,7 +13,7 @@ q_table = np.zeros((n_states, n_actions)) # (400, 3)
 
 gamma = 0.9
 q_learning_rate = 0.03
-epochs = 100
+epochs = 10
 theta_learning_rate = 0.01
 
 def idx_trajectories(env, one_feature):
@@ -93,7 +93,7 @@ def main():
 
         if episode % 50 == 0:
             print('{} episode | score : {:.1f}'.format(episode, score))
-            np.save("./results/maxent_q_table", arr=q_table)
+            np.save("./results/maxent_q_table_DM", arr=q_table)
 
 if __name__ == '__main__':
     main()
