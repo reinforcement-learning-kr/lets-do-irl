@@ -13,7 +13,7 @@ q_table = np.zeros((n_states, n_actions)) # (400, 3)
 
 gamma = 0.9
 q_learning_rate = 0.03
-epochs = 10
+epochs = 100
 theta_learning_rate = 0.01
 
 def idx_trajectories(env, one_feature):
@@ -31,7 +31,7 @@ def idx_trajectories(env, one_feature):
             state_idx = position_idx + velocity_idx * one_feature
 
             trajectories[x][y][0] = state_idx
-            trajectories[x][y][1] = raw_traj[x][y][2] 
+            trajectories[x][y][1] = raw_traj[x][y][2]
             trajectories[x][y][2] = raw_traj[x][y][3] 
             
     return trajectories
@@ -64,7 +64,7 @@ def main():
         state = env.reset()
         score = 0
 
-        if episode % 100 == 0 and episode != 0:
+        if episode % 150 == 0 and episode != 0:
             irl_rewards = maxent.maxent_irl(feature_matrix, n_actions, gamma, 
                                                 trajectories, epochs, theta_learning_rate)
 
@@ -75,7 +75,7 @@ def main():
             next_state, reward, done, _ = env.step(action)
             
             next_state_idx = idx_to_state(env, next_state)
-            if episode > 100:
+            if episode > 150:
                 irl_reward = irl_rewards[next_state_idx]
                 update_q_table(state_idx, action, irl_reward, next_state_idx)
                 score += irl_reward
@@ -92,9 +92,9 @@ def main():
                 pylab.savefig("./learning_curves/maxent_q_learning.png")
                 break
 
-        if episode % 30 == 0:
+        if episode % 50 == 0:
             print('{} episode | score : {:.1f}'.format(episode, score))
-            np.save("maxent_q_table", arr=q_table)
+            np.save("./results/maxent_q_table100", arr=q_table)
 
 if __name__ == '__main__':
     main()

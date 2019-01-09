@@ -1,7 +1,8 @@
 import gym
+import pylab
 import numpy as np
 
-q_table = np.load(file="maxent_q_table.npy") # (400, 3)
+q_table = np.load(file="./results/maxent_q_table_g.npy") # (400, 3)
 one_feature = 20 # number of state per one feature
 gamma = 0.9
 q_learning_rate = 0.03
@@ -34,21 +35,18 @@ def main():
             action = np.argmax(q_table[state_idx])
             next_state, reward, done, _ = env.step(action)
             
-            next_state_idx = idx_to_state(env, next_state)
-            update_q_table(state_idx, action, reward, next_state_idx)      
-
             score += reward
             state = next_state
             
             if done:
-                scores.append(score)
-                episodes.append(episode)
-                pylab.plot(episodes, scores, 'b')
-                pylab.savefig("./learning_curves/maxent_test.png")
+                # scores.append(score)
+                # episodes.append(episode)
+                # pylab.plot(episodes, scores, 'b')
+                # pylab.savefig("./learning_curves/maxent_test.png")
                 break
 
-        if episode % 100 == 0:
-            print('{} episode | score : {:.1f}'.format(episode, score))
+        # if episode % 30 == 0:
+        print('{} episode | score : {:.1f}'.format(episode, score))
 
 if __name__ == '__main__':
     main()
