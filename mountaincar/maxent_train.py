@@ -14,7 +14,7 @@ gamma = 0.9
 q_learning_rate = 0.03
 epochs = 20
 theta_learning_rate = 0.01
-enter_by_irl = 50000
+enter_by_irl = 100000
 
 def idx_trajectories(env, one_feature):
     env_low = env.observation_space.low     
@@ -90,13 +90,13 @@ def main():
                 scores.append(score)
                 episodes.append(episode)
                 pylab.plot(episodes, scores, 'b')
-                pylab.savefig("./learning_curves/maxent_eps_50000.png")
+                pylab.savefig("./learning_curves/maxent_eps_100000.png")
                 break
 
-        if episode % 30 == 0:
+        if episode % 100 == 0:
             score_avg = np.mean(scores)
             print('{} episode score is {:.2f}'.format(episode, score_avg))
-            np.save("./results/maxent_q_table_eps_50000", arr=q_table)
+            np.save("./results/maxent_q_table_eps_100000", arr=q_table)
 
 if __name__ == '__main__':
     main()
