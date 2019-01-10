@@ -7,14 +7,14 @@ from algorithms import maxent
 n_states = 400 # position - 20, velocity - 20
 n_actions = 3
 one_feature = 20 # number of state per one feature
-
-feature_matrix = np.eye((n_states)) # (400, 400)
 q_table = np.zeros((n_states, n_actions)) # (400, 3)
+feature_matrix = np.eye((n_states)) # (400, 400)
 
 gamma = 0.9
 q_learning_rate = 0.03
-epochs = 10
+epochs = 20
 theta_learning_rate = 0.01
+enter_by_irl = 50000
 
 def idx_trajectories(env, one_feature):
     env_low = env.observation_space.low     
@@ -63,9 +63,11 @@ def main():
         state = env.reset()
         score = 0
 
-        if episode % 150 == 0 and episode != 0:
+        if episode % enter_by_irl == 0 and episode != 0:
             irl_rewards = maxent.maxent_irl(feature_matrix, n_actions, gamma, 
                                                 trajectories, epochs, theta_learning_rate)
+            global q_table
+            q_table = np.zeros_like(q_table)
 
         while True:
             # env.render()
@@ -74,7 +76,7 @@ def main():
             next_state, reward, done, _ = env.step(action)
             
             next_state_idx = idx_to_state(env, next_state)
-            if episode > 150:
+            if episode > enter_by_irl:
                 irl_reward = irl_rewards[next_state_idx]
                 update_q_table(state_idx, action, irl_reward, next_state_idx)
                 score += irl_reward
@@ -88,12 +90,13 @@ def main():
                 scores.append(score)
                 episodes.append(episode)
                 pylab.plot(episodes, scores, 'b')
-                pylab.savefig("./learning_curves/maxent_q_learning.png")
+                pylab.savefig("./learning_curves/maxent_eps_50000.png")
                 break
 
-        if episode % 50 == 0:
-            print('{} episode | score : {:.1f}'.format(episode, score))
-            np.save("./results/maxent_q_table_DM", arr=q_table)
+        if episode % 30 == 0:
+            score_avg = np.mean(scores)
+            print('{} episode score is {:.2f}'.format(episode, score_avg))
+            np.save("./results/maxent_q_table_eps_50000", arr=q_table)
 
 if __name__ == '__main__':
     main()
