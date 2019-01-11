@@ -1,7 +1,8 @@
 import gym
+import pylab
 import numpy as np
 
-q_table = np.load(file="results/maxent_q_table_DM.npy") # (400, 3)
+q_table = np.load(file="results/maxent_q_table_GH_50ep.npy") # (400, 3)
 one_feature = 20 # number of state per one feature
 gamma = 0.9
 q_learning_rate = 0.03
@@ -17,9 +18,10 @@ def idx_to_state(env, state):
     
 def main():
     env = gym.make('MountainCar-v0')
-    scores = []
+    
+    episodes, scores = [], []
 
-    for episode in range(100):
+    for episode in range(1000):
         state = env.reset()
         score = 0
 
@@ -33,13 +35,15 @@ def main():
             state = next_state
             
             if done:
+                scores.append(score)
+                episodes.append(episode)
+                pylab.plot(episodes, scores, 'b')
+                pylab.savefig("./learning_curves/maxent_test.png")
                 break
 
-        # if episode % 5 == 0:
-        print('{} episode | score : {:.1f}'.format(episode, score))
-        # scores.append(score)    
-        # score_avg = np.mean(scores)
-        # print('{} episode score is {:.2f}'.format(episode, score_avg))
+        if episode % 100 == 0:
+            score_avg = np.mean(scores)
+            print('{} episode score is {:.2f}'.format(episode, score_avg))
 
 if __name__ == '__main__':
     main()

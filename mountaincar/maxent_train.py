@@ -12,7 +12,7 @@ feature_matrix = np.eye((n_states)) # (400, 400)
 
 gamma = 0.9
 q_learning_rate = 0.03
-epochs = 20
+epochs = 200
 theta_learning_rate = 0.01
 enter_by_irl = 100000
 
@@ -59,7 +59,7 @@ def main():
 
     episodes, scores = [], []
     
-    for episode in range(1000000):
+    for episode in range(100000):
         state = env.reset()
         score = 0
 
