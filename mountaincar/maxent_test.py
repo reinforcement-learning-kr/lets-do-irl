@@ -2,7 +2,7 @@ import gym
 import pylab
 import numpy as np
 
-q_table = np.load(file="results/maxent_q_table_GH_50ep.npy") # (400, 3)
+q_table = np.load(file="results/maxent_q_table/maxent_200_epoch_9000_epi.npy") # (400, 3)
 one_feature = 20 # number of state per one feature
 gamma = 0.9
 q_learning_rate = 0.03
@@ -41,9 +41,9 @@ def main():
                 pylab.savefig("./learning_curves/maxent_test.png")
                 break
 
-        if episode % 100 == 0:
-            score_avg = np.mean(scores)
-            print('{} episode score is {:.2f}'.format(episode, score_avg))
+        if episode % 1 == 0:
+            #score_avg = np.mean(scores)
+            print('{} episode score is {:.2f}'.format(episode, score))
 
 if __name__ == '__main__':
     main()
