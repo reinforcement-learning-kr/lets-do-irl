@@ -18,7 +18,7 @@ env = gym.make('MountainCar-v0')
 trajectories = []
 episode_step = 0
 
-for episode in range(20): # n_trajectories
+for episode in range(20): # n_trajectories : 20
     trajectory = []
     step = 0
 
