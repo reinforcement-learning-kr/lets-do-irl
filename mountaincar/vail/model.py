@@ -32,3 +32,19 @@ class Critic(nn.Module):
         x = torch.tanh(self.fc2(x))
         value = self.fc3(x)
         return value
+
+
+class Discriminator(nn.Module):
+    def __init__(self, num_inputs):
+        super(Discriminator, self).__init__()
+        self.fc1 = nn.Linear(num_inputs, 64)
+        self.fc2 = nn.Linear(64, 64)
+        self.fc3 = nn.Linear(64, 1)
+        self.fc3.weight.data.mul_(0.1)
+        self.fc3.bias.data.mul_(0.0)
+
+    def forward(self, x):
+        x = torch.tanh(self.fc1(x))
+        x = torch.tanh(self.fc2(x))
+        prob = torch.sigmoid(self.fc3(x))
+        return prob

@@ -1,6 +1,5 @@
 # from https://github.com/pytorch/tutorials/blob/master/intermediate_source/reinforcement_q_learning.py
 
-import random
 from collections import namedtuple
 
 Transition = namedtuple('Transition',
