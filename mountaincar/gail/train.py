@@ -108,16 +108,17 @@ def main():
             state = next_state
 
             if done:
-                scores.append(score)
-                episodes.append(episode)
-                pylab.plot(episodes, scores, 'b')
-                pylab.savefig("./learning_curves/gail_train.png")
                 break
-
-        writer.add_scalar('log/score', float(score_avg), iter)
+        
+        scores.append(score)
+        episodes.append(episode)
+        pylab.plot(episodes, scores, 'b')
+        pylab.savefig("./learning_curves/gail_train.png")
+                
+        score_avg = np.mean(scores)
+        writer.add_scalar('log/score', float(score_avg), episode)
         
         if episode % 50 == 0:
-            score_avg = np.mean(scores)
             print('{} episode score is {:.2f}'.format(episode, score_avg))
         
         transitions = memory.sample()
