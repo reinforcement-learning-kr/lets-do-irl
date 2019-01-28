@@ -3,7 +3,7 @@ import pylab
 import numpy as np
 import matplotlib.pyplot as plt
 
-from algorithms import maxent
+import maxent
 
 n_states = 400 # position - 20, velocity - 20
 n_actions = 3

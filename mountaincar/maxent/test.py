@@ -2,7 +2,7 @@ import gym
 import pylab
 import numpy as np
 
-q_table = np.load(file="results/maxent_q_table/maxent_200_epoch_9000_epi.npy") # (400, 3)
+q_table = np.load(file="results/maxent_20_epoch_100000_epi_test.npy") # (400, 3)
 one_feature = 20 # number of state per one feature
 gamma = 0.9
 q_learning_rate = 0.03
