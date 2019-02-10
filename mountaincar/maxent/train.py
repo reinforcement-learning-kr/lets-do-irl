@@ -59,17 +59,17 @@ def main():
 
     episodes, scores = [], []
     
-    for episode in range(100000):
+    for episode in range(10000):
         state = env.reset()
         score = 0
         irl_rewards = 0
 
-        if episode % enter_by_irl == 0 and episode != 0:
+        if episode == 0:
             irl_rewards = maxent_irl(feature_matrix, n_actions, gamma, 
                                                 trajectories, epochs, theta_learning_rate)
-            global q_table
-            q_table = np.zeros_like(q_table)
-            print ("maxent_irl reward:", irl_rewards)
+            # global q_table
+            # q_table = np.zeros_like(q_table)
+            # print ("maxent_irl reward:", irl_rewards)
 
         while True:
             # env.render()
@@ -78,15 +78,16 @@ def main():
             next_state, reward, done, _ = env.step(action)
             
             next_state_idx = idx_to_state(env, next_state)
-            if episode > enter_by_irl:
-                irl_rewards = maxent.maxent_irl(feature_matrix, n_actions, gamma, 
-                                                trajectories, epochs, theta_learning_rate)
-                irl_reward = irl_rewards[next_state_idx]
-                update_q_table(state_idx, action, irl_reward, next_state_idx)
-                score += reward
-            else:
-                update_q_table(state_idx, action, reward, next_state_idx)      
-                score += reward
+            irl_reward = irl_rewards[next_state_idx]
+            update_q_table(state_idx, action, irl_reward, next_state_idx)
+            score += reward
+            # if episode < 10000:
+            #     irl_reward = irl_rewards[next_state_idx]
+            #     update_q_table(state_idx, action, irl_reward, next_state_idx)
+            #     score += reward
+            # else:
+            #     update_q_table(state_idx, action, reward, next_state_idx)      
+            #     score += reward
 
             
             state = next_state

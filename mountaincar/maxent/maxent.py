@@ -14,6 +14,7 @@ def maxent_irl(feature_matrix, n_actions, gamma, trajectories, epochs, learning_
 
     # Gradient descent on theta.
     for i in range(epochs):
+        print("epochs : ", i)
         reward = feature_matrix.dot(theta)
 
         expected_svf = find_expected_svf(n_states, n_actions, reward, gamma, trajectories)
