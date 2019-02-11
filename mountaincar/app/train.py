@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 
 from app import *
 
-feature_num = 2 # position, velocity
-one_feature = 20 # number of state per one feature
-n_states = one_feature**2 # position - 20, velocity - 20
+n_states = 400 # position - 20, velocity - 20
 n_actions = 3
+one_feature = 20 # number of state per one feature
+feature_num = 4
 q_table = np.zeros((n_states, n_actions))  # (400, 3)
 
 gamma = 0.9
@@ -29,7 +29,7 @@ def update_q_table(state, action, reward, next_state):
     q_table[state][action] += q_learning_rate * (q_2 - q_1)
 
 def plot_score(scores, episode):
-    fig,ax = plt.subplots(1,1, figsize=(10, 10))
+    fig, ax = plt.subplots(1,1, figsize=(10, 10))
     
     plt.title('Scores in episode : {}'.format(episode))
     plt.plot(scores)
@@ -81,7 +81,7 @@ def main():
             if done:
                 scores.append(score)
 
-                if episode >= 35000:
+                if episode >= 50000:
                     # np.save("./results/app_q_table", arr=q_table)
                     # plot_score(scores, episode)
                     env.close()
