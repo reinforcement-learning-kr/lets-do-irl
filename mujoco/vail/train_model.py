@@ -17,9 +17,12 @@ def train_vdb(vdb, memory, vdb_optim, demonstrations, beta, args):
         expert, e_mu, e_logvar = vdb(torch.Tensor(demonstrations))
 
         l_kld = kl_divergence(l_mu, l_logvar)
+        l_kld = l_kld.mean()
+        
         e_kld = kl_divergence(e_mu, e_logvar)
+        e_kld = e_kld.mean()
+        
         kld = 0.5 * (l_kld + e_kld)
-        kld = kld.mean()
         bottleneck_loss = kld - args.i_c
 
         beta = max(0, beta + args.alpha_beta * bottleneck_loss)

@@ -27,7 +27,7 @@ parser.add_argument('--lamda', type=float, default=0.98,
                     help='GAE hyper-parameter (default: 0.98)')
 parser.add_argument('--hidden_size', type=int, default=100, 
                     help='hidden unit size of actor, critic and vdb networks (default: 100)')
-parser.add_argument('--z_size', type=int, default=4, 
+parser.add_argument('--z_size', type=int, default=3, 
                     help='latent vector z unit size of vdb networks (default: 4)')
 parser.add_argument('--learning_rate', type=float, default=3e-4, 
                     help='learning rate of models (default: 3e-4)')
@@ -39,7 +39,7 @@ parser.add_argument('--alpha_beta', type=float, default=1e-5,
                     help='step size to be used in beta term (default: 1e-5)')
 parser.add_argument('--i_c', type=float, default=0.5, 
                     help='constraint for KL-Divergence upper bound (default: 0.5)')
-parser.add_argument('--vdb_update_num', type=int, default=6, 
+parser.add_argument('--vdb_update_num', type=int, default=3, 
                     help='update number of variational discriminator bottleneck (default: 6)')
 parser.add_argument('--ppo_update_num', type=int, default=10, 
                     help='update number of actor-critic (default: 10)')
@@ -151,25 +151,25 @@ def main():
         train_vdb(vdb, memory, vdb_optim, demonstrations, 0, args)
         train_ppo(actor, critic, memory, actor_optim, critic_optim, args)
 
-        if iter % 100:
-            score_avg = int(score_avg)
+        # if iter % 100:
+        #     score_avg = int(score_avg)
 
-            model_path = os.path.join(os.getcwd(),'save_model')
-            if not os.path.isdir(model_path):
-                os.makedirs(model_path)
+        #     model_path = os.path.join(os.getcwd(),'save_model')
+        #     if not os.path.isdir(model_path):
+        #         os.makedirs(model_path)
 
-            ckpt_path = os.path.join(model_path, 'ckpt_'+ str(score_avg)+'.pth.tar')
+        #     ckpt_path = os.path.join(model_path, 'ckpt_'+ str(score_avg)+'.pth.tar')
 
-            save_checkpoint({
-                'actor': actor.state_dict(),
-                'critic': critic.state_dict(),
-                'vdb': vdb.state_dict(),
-                'z_filter_n':running_state.rs.n,
-                'z_filter_m': running_state.rs.mean,
-                'z_filter_s': running_state.rs.sum_square,
-                'args': args,
-                'score': score_avg
-            }, filename=ckpt_path)
+        #     save_checkpoint({
+        #         'actor': actor.state_dict(),
+        #         'critic': critic.state_dict(),
+        #         'vdb': vdb.state_dict(),
+        #         'z_filter_n':running_state.rs.n,
+        #         'z_filter_m': running_state.rs.mean,
+        #         'z_filter_s': running_state.rs.sum_square,
+        #         'args': args,
+        #         'score': score_avg
+        #     }, filename=ckpt_path)
 
 if __name__=="__main__":
     main()

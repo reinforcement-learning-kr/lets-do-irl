@@ -25,7 +25,7 @@ def get_reward(vdb, state, action):
         return -math.log(vdb(state_action)[0].item())
 
 def kl_divergence(mu, logvar):
-    kl_div = 0.5 * torch.sum(mu.pow(2) + logvar.exp() - logvar - 1)
+    kl_div = 0.5 * torch.sum(mu.pow(2) + logvar.exp() - logvar - 1, dim=1)
     return kl_div
 
 def save_checkpoint(state, filename):
