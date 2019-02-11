@@ -78,7 +78,7 @@ def calc_feature_expectation(feature_num, gamma, q_table, env):
         score = 0
         done = False
         
-        while not done and (demo_length <= 120):
+        while not done:
             demo_length += 1
 
             state_idx = idx_to_state(env, state)

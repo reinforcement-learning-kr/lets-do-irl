@@ -10,8 +10,9 @@ n_actions = 3
 one_feature = 20 # number of state per one feature
 feature_num = 4
 q_table = np.zeros((n_states, n_actions))  # (400, 3)
+max_epi = 80000
 
-gamma = 0.9
+gamma = 0.99
 q_learning_rate = 0.03
 
 def idx_to_state(env, state):
@@ -38,7 +39,7 @@ def plot_score(scores, episode):
     ax.set_xlabel('episode')
     
     plt.draw()
-    plt.savefig('Scores in episode_{}.png'.format(episode))
+    plt.savefig('learning_curves/Scores in episode_{}.png'.format(episode))
     plt.close(fig)
 
 
@@ -48,7 +49,7 @@ def main():
     
     feature_estimate = FeatureEstimate(env, feature_num)
     
-    learner = random_feature_expectation(feature_num)
+    learner = calc_feature_expectation(feature_num, gamma, q_table, env)
     learner = np.matrix([learner])
     
     expert = expert_feature_expectation(feature_num, gamma, demonstrations, env)
@@ -81,9 +82,9 @@ def main():
             if done:
                 scores.append(score)
 
-                if episode >= 50000:
-                    # np.save("./results/app_q_table", arr=q_table)
-                    # plot_score(scores, episode)
+                if episode >= max_epi:
+                    np.save("./results/app_q_table", arr=q_table)
+                    plot_score(scores, episode)
                     env.close()
                     sys.exit()
 
@@ -91,7 +92,7 @@ def main():
                 break
 
         if episode % 1000 == 0:
-            score_avg = np.mean(scores)
+            score_avg = np.mean(scores[-1000:])
             print('{} episode score is {:.2f}'.format(episode, score_avg))
 
         if episode % 5000 == 0:

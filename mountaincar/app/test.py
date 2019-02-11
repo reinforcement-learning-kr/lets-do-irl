@@ -24,7 +24,7 @@ if __name__ == '__main__':
     # Load the agent
     n_states = N_idx**2  # position - 20, velocity - 20
     n_actions = 3
-    q_table = np.load(file="best_q_table.npy")
+    q_table = np.load(file="results/app_q_table.npy")
 
     # Create a new game instance.
     env = gym.make('MountainCar-v0')
