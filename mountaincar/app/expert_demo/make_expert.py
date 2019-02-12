@@ -2,7 +2,7 @@ import gym
 import readchar
 import numpy as np
 
-# # MACROS
+# MACROS
 Push_Left = 0
 No_Push = 1
 Push_Right = 2
@@ -50,4 +50,4 @@ for episode in range(20): # n_trajectories : 20
 np_trajectories = np.array(trajectories, float)
 print("np_trajectories.shape", np_trajectories.shape)
 
-np.save("expert_trajectories", arr=np_trajectories)
+np.save("expert_demo", arr=np_trajectories)

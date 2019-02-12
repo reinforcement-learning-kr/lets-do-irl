@@ -18,9 +18,11 @@ class FeatureEstimate:
 
         for i in range(int(self.feature_num/2)):
             # position
-            self.feature[i] = self.gaussian_function(state[0], env_low[0] + i * env_distance[0])
+            self.feature[i] = self.gaussian_function(state[0], 
+                                    env_low[0] + i * env_distance[0])
             # velocity
-            self.feature[i+int(self.feature_num/2)] = self.gaussian_function(state[1], env_low[1] + i * env_distance[1])
+            self.feature[i+int(self.feature_num/2)] = self.gaussian_function(state[1], 
+                                                        env_low[1] + i * env_distance[1])
 
         return self.feature
 
