@@ -1,5 +1,6 @@
 import sys
 import gym
+import pylab
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -10,7 +11,6 @@ n_actions = 3
 one_feature = 20 # number of state per one feature
 feature_num = 4
 q_table = np.zeros((n_states, n_actions))  # (400, 3)
-max_epi = 80000
 
 gamma = 0.99
 q_learning_rate = 0.03
@@ -29,19 +29,6 @@ def update_q_table(state, action, reward, next_state):
     q_2 = reward + gamma * max(q_table[next_state])
     q_table[state][action] += q_learning_rate * (q_2 - q_1)
 
-def plot_score(scores, episode):
-    fig, ax = plt.subplots(1,1, figsize=(10, 10))
-    
-    plt.title('Scores in episode : {}'.format(episode))
-    plt.plot(scores)
-
-    ax.set_ylabel('score')
-    ax.set_xlabel('episode')
-    
-    plt.draw()
-    plt.savefig('learning_curves/Scores in episode_{}.png'.format(episode))
-    plt.close(fig)
-
 
 def main():
     env = gym.make('MountainCar-v0')
@@ -58,10 +45,9 @@ def main():
     w, status = QP_optimizer(feature_num, learner, expert)
     
     
-    scores = []
-    episode = 0
+    episodes, scores = [], []
     
-    while True:
+    for episode in range(60000):
         state = env.reset()
         score = 0
 
@@ -81,19 +67,15 @@ def main():
 
             if done:
                 scores.append(score)
-
-                if episode >= max_epi:
-                    np.save("./results/app_q_table", arr=q_table)
-                    plot_score(scores, episode)
-                    env.close()
-                    sys.exit()
-
-                episode += 1
+                episodes.append(episode)
                 break
 
         if episode % 1000 == 0:
-            score_avg = np.mean(scores[-1000:])
+            score_avg = np.mean(scores)
             print('{} episode score is {:.2f}'.format(episode, score_avg))
+            pylab.plot(episodes, scores, 'b')
+            pylab.savefig("./learning_curves/app_eps_60000.png")
+            np.save("./results/app_q_table", arr=q_table)
 
         if episode % 5000 == 0:
             # optimize weight per 5000 episode
