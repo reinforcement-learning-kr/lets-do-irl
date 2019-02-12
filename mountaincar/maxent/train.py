@@ -10,11 +10,10 @@ one_feature = 20 # number of state per one feature
 q_table = np.zeros((n_states, n_actions)) # (400, 3)
 feature_matrix = np.eye((n_states)) # (400, 400)
 
-gamma = 0.9
+gamma = 0.99
 q_learning_rate = 0.03
-epochs = 20
+epochs = 50
 theta_learning_rate = 0.01
-enter_by_irl = 1000
 
 def idx_trajectories(env, one_feature):
     env_low = env.observation_space.low     
@@ -59,7 +58,7 @@ def main():
 
     episodes, scores = [], []
     
-    for episode in range(10000):
+    for episode in range(50001):
         state = env.reset()
         score = 0
         irl_rewards = 0
@@ -81,23 +80,11 @@ def main():
             irl_reward = irl_rewards[next_state_idx]
             update_q_table(state_idx, action, irl_reward, next_state_idx)
             score += reward
-            # if episode < 10000:
-            #     irl_reward = irl_rewards[next_state_idx]
-            #     update_q_table(state_idx, action, irl_reward, next_state_idx)
-            #     score += reward
-            # else:
-            #     update_q_table(state_idx, action, reward, next_state_idx)      
-            #     score += reward
-
-            
             state = next_state
             
             if done:
                 scores.append(score)
                 episodes.append(episode)
-                pylab.plot(episodes, scores, 'b')
-                learning_curve_file_name = './learning_curves/maxent_{}_epochs.png'.format(epochs)
-                pylab.savefig(learning_curve_file_name)
                 break
 
 
@@ -106,9 +93,13 @@ def main():
                 
 
         if episode % 1000 == 0:
+            pylab.plot(episodes, scores, 'b')
+            learning_curve_file_name = './learning_curves/maxent_{}_epochs.png'.format(epochs)
+            pylab.savefig(learning_curve_file_name)
+
             score_avg = np.mean(scores)
             print('{} episode score is {:.2f}'.format(episode, score_avg))
-            file_name = './results/maxent_q_table/maxent_{}_epoch_{}_epi'.format(epochs, episode)
+            file_name = './results/maxent_{}_epoch_{}_epi'.format(epochs, episode)
             np.save(file_name, arr=q_table)
 
 if __name__ == '__main__':
