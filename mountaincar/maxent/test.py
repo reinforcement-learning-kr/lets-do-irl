@@ -6,6 +6,7 @@ q_table = np.load(file="results/maxent_20_epoch_100000_epi_test.npy") # (400, 3)
 one_feature = 20 # number of state per one feature
 
 def idx_to_state(env, state):
+    """ Convert pos and vel about mounting car environment to the integer value"""
     env_low = env.observation_space.low
     env_high = env.observation_space.high 
     env_distance = (env_high - env_low) / one_feature 
@@ -40,7 +41,6 @@ def main():
                 break
 
         if episode % 1 == 0:
-            #score_avg = np.mean(scores)
             print('{} episode score is {:.2f}'.format(episode, score))
 
 if __name__ == '__main__':
