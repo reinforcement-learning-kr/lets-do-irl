@@ -4,8 +4,6 @@ import numpy as np
 
 q_table = np.load(file="results/maxent_20_epoch_100000_epi_test.npy") # (400, 3)
 one_feature = 20 # number of state per one feature
-gamma = 0.9
-q_learning_rate = 0.03
 
 def idx_to_state(env, state):
     env_low = env.observation_space.low
@@ -21,7 +19,7 @@ def main():
     
     episodes, scores = [], []
 
-    for episode in range(1000):
+    for episode in range(10):
         state = env.reset()
         score = 0
 
