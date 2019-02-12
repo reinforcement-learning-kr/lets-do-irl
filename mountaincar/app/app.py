@@ -89,11 +89,11 @@ def QP_optimizer(feature_num, learner, expert):
 
 
 def add_feature_expectation(learner, temp_learner):
-    # agent의 RL과정이 끝난 후 나온 FE를 list에 저장
+    # save new feature expectation to list after RL step
     learner = np.vstack([learner, temp_learner])
     return learner
 
 def subtract_feature_expectation(learner):
-    # infeasible할 시에 맨 위 FE를 list에 제외
+    # if status is infeasible, subtract first feature expectation
     learner = learner[1:][:]
     return learner
