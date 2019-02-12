@@ -2,7 +2,6 @@ import sys
 import gym
 import pylab
 import numpy as np
-import matplotlib.pyplot as plt
 
 from app import *
 
@@ -34,9 +33,9 @@ def main():
     env = gym.make('MountainCar-v0')
     demonstrations = np.load(file="expert_demo/expert_demo.npy")
     
-    feature_estimate = FeatureEstimate(env, feature_num)
+    feature_estimate = FeatureEstimate(feature_num, env)
     
-    learner = calc_feature_expectation(feature_num, gamma, q_table, env)
+    learner = calc_feature_expectation(feature_num, gamma, q_table, demonstrations, env)
     learner = np.matrix([learner])
     
     expert = expert_feature_expectation(feature_num, gamma, demonstrations, env)
@@ -80,7 +79,7 @@ def main():
         if episode % 5000 == 0:
             # optimize weight per 5000 episode
             status = "infeasible"
-            temp_learner = calc_feature_expectation(feature_num, gamma, q_table, env)
+            temp_learner = calc_feature_expectation(feature_num, gamma, q_table, demonstrations, env)
             learner = add_feature_expectation(learner, temp_learner)
             
             while status=="infeasible":
