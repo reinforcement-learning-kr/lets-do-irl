@@ -14,7 +14,7 @@ q_table = np.zeros((n_states, n_actions))  # (400, 3)
 gamma = 0.99
 q_learning_rate = 0.03
 
-def idx_to_state(env, state):
+def idx_state(env, state):
     env_low = env.observation_space.low
     env_high = env.observation_space.high
     env_distance = (env_high - env_low) / one_feature
@@ -51,14 +51,14 @@ def main():
         score = 0
 
         while True:
-            state_idx = idx_to_state(env, state)
+            state_idx = idx_state(env, state)
             action = np.argmax(q_table[state_idx])
             next_state, reward, done, _ = env.step(action)
             
             features = feature_estimate.get_features(next_state)
             irl_reward = np.dot(w, features)
             
-            next_state_idx = idx_to_state(env, next_state)
+            next_state_idx = idx_state(env, next_state)
             update_q_table(state_idx, action, irl_reward, next_state_idx)
 
             score += reward

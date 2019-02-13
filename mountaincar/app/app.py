@@ -1,6 +1,6 @@
 import numpy as np
 import cvxpy as cp
-from train import idx_to_state
+from train import idx_state
 
 class FeatureEstimate:
     def __init__(self, feature_num, env):
@@ -40,7 +40,7 @@ def calc_feature_expectation(feature_num, gamma, q_table, demonstrations, env):
         while not done:
             demo_length += 1
 
-            state_idx = idx_to_state(env, state)
+            state_idx = idx_state(env, state)
             action = np.argmax(q_table[state_idx])
             next_state, reward, done, _ = env.step(action)
             
