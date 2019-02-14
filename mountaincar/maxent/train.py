@@ -12,8 +12,10 @@ feature_matrix = np.eye((n_states)) # (400, 400)
 
 gamma = 0.99
 q_learning_rate = 0.03
-epochs = 30
+epochs = 10
 theta_learning_rate = 0.01
+
+np.random.seed(400)
 
 def idx_demo(env, one_feature):
     env_low = env.observation_space.low     
@@ -56,24 +58,28 @@ def main():
     env = gym.make('MountainCar-v0')
     demonstrations = idx_demo(env, one_feature)
 
+    print(num)
     episodes, scores = [], []
-    
-    for episode in range(50000):
+
+    for episode in range(30000):
         state = env.reset()
         score = 0
 
-        if episode == 0:
-            irl_rewards = maxent.maxent_irl(feature_matrix, n_actions, gamma, 
-                                    demonstrations, epochs, theta_learning_rate)
-
+        if episode == 1000:
+            irl_rewards = maxent.maxent_irl(feature_matrix, n_actions, epochs,
+                                            theta_learning_rate, demonstrations)
+                
         while True:
             state_idx = idx_state(env, state)
             action = np.argmax(q_table[state_idx])
             next_state, reward, done, _ = env.step(action)
             
             next_state_idx = idx_state(env, next_state)
-            irl_reward = irl_rewards[next_state_idx]
-            update_q_table(state_idx, action, irl_reward, next_state_idx)
+            if episode >= 1000:
+                irl_reward = irl_rewards[next_state_idx]
+                update_q_table(state_idx, action, irl_reward, next_state_idx)
+            else:
+                update_q_table(state_idx, action, reward, next_state_idx)
             
             score += reward
             state = next_state
@@ -87,7 +93,8 @@ def main():
             score_avg = np.mean(scores)
             print('{} episode score is {:.2f}'.format(episode, score_avg))
             pylab.plot(episodes, scores, 'b')
-            pylab.savefig("./learning_curves/maxent_eps_50000.png")
+            pylab.savefig(learning_curve_file_name)
+            pylab.savefig("./learning_curves/maxent_eps_30000.png")
             np.save("./results/maxent_q_table", arr=q_table)
 
 if __name__ == '__main__':

@@ -2,24 +2,22 @@ import numpy as np
 from itertools import product
 from train import get_q_table
 
-def maxent_irl(feature_matrix, n_actions, gamma, demonstrations, epochs, learning_rate):
+def maxent_irl(feature_matrix, n_actions, epochs, learning_rate, demonstrations):
     # n_states = 400
     n_states = feature_matrix.shape[0]
     
-    # Initialize weights.
+    # Initialize weights
     theta = -(np.random.uniform(size=(n_states,)))
     
-    # Calculate the expert's feature expectations \tilde{f}. 
+    # Calculate the expert's feature expectations \tilde{f} 
     expert = expert_feature_expectations(feature_matrix, demonstrations)
 
-    # Gradient descent on theta.
+    # Compute expected state visitation frequency
+    expected_svf = get_expected_svf(n_states, n_actions, demonstrations)
+    
+    # Gradient descent on theta
     for i in range(epochs):
-        print("epochs:", i)
-        reward = feature_matrix.dot(theta)
-
-        expected_svf = get_expected_svf(n_states, n_actions, reward, gamma, demonstrations)
         learner = feature_matrix.T.dot(expected_svf)
-        
         gradient = expert - learner
 
         theta += learning_rate * gradient
@@ -43,7 +41,7 @@ def expert_feature_expectations(feature_matrix, demonstrations):
     return feature_expectations
 
 
-def get_expected_svf(n_states, n_actions, reward, gamma, demonstrations):
+def get_expected_svf(n_states, n_actions, demonstrations):
     demo_num = demonstrations.shape[0]
     demo_length = demonstrations.shape[1]
     start_state_count = np.zeros(n_states)
@@ -67,3 +65,4 @@ def get_expected_svf(n_states, n_actions, reward, gamma, demonstrations):
 
     # Step 6 in Summing frequencies
     return expected_svf.sum(axis=1)
+
