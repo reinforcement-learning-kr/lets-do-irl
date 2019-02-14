@@ -55,7 +55,7 @@ def main():
             action = np.argmax(q_table[state_idx])
             next_state, reward, done, _ = env.step(action)
             
-            features = feature_estimate.get_features(next_state)
+            features = feature_estimate.get_features(state_idx)
             irl_reward = np.dot(w, features)
             
             next_state_idx = idx_state(env, next_state)

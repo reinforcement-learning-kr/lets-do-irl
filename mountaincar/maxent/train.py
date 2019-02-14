@@ -58,7 +58,6 @@ def main():
     env = gym.make('MountainCar-v0')
     demonstrations = idx_demo(env, one_feature)
 
-    print(num)
     episodes, scores = [], []
 
     for episode in range(30000):
@@ -76,7 +75,7 @@ def main():
             
             next_state_idx = idx_state(env, next_state)
             if episode >= 1000:
-                irl_reward = irl_rewards[next_state_idx]
+                irl_reward = irl_rewards[state_idx]
                 update_q_table(state_idx, action, irl_reward, next_state_idx)
             else:
                 update_q_table(state_idx, action, reward, next_state_idx)
