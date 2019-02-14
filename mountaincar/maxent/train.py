@@ -92,7 +92,6 @@ def main():
             score_avg = np.mean(scores)
             print('{} episode score is {:.2f}'.format(episode, score_avg))
             pylab.plot(episodes, scores, 'b')
-            pylab.savefig(learning_curve_file_name)
             pylab.savefig("./learning_curves/maxent_eps_30000.png")
             np.save("./results/maxent_q_table", arr=q_table)
 
