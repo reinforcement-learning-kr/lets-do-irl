@@ -2,7 +2,7 @@ import gym
 import pylab
 import numpy as np
 
-import maxent
+from maxent import *
 
 n_states = 400 # position - 20, velocity - 20
 n_actions = 3
@@ -12,10 +12,9 @@ feature_matrix = np.eye((n_states)) # (400, 400)
 
 gamma = 0.99
 q_learning_rate = 0.03
-epochs = 10
-theta_learning_rate = 0.01
+theta_learning_rate = 0.05
 
-np.random.seed(400)
+np.random.seed(1)
 
 def idx_demo(env, one_feature):
     env_low = env.observation_space.low     
@@ -50,13 +49,14 @@ def update_q_table(state, action, reward, next_state):
     q_2 = reward + gamma * max(q_table[next_state])
     q_table[state][action] += q_learning_rate * (q_2 - q_1)
 
-def get_q_table():
-    return q_table
-
 
 def main():
     env = gym.make('MountainCar-v0')
     demonstrations = idx_demo(env, one_feature)
+
+    learner_feature_expectations = np.zeros(n_states)
+
+    theta = -(np.random.uniform(size=(n_states,)))
 
     episodes, scores = [], []
 
@@ -64,22 +64,22 @@ def main():
         state = env.reset()
         score = 0
 
-        if episode == 1000:
-            irl_rewards = maxent.maxent_irl(feature_matrix, n_actions, epochs,
-                                            theta_learning_rate, demonstrations)
+        if episode != 0 and episode == 10000 or (episode > 10000 and episode % 5000 == 0):
+            expert = expert_feature_expectations(feature_matrix, demonstrations)
+            learner = learner_feature_expectations / episode
+            maxent_irl(expert, learner, theta, theta_learning_rate)
                 
         while True:
             state_idx = idx_state(env, state)
             action = np.argmax(q_table[state_idx])
             next_state, reward, done, _ = env.step(action)
             
+            irl_reward = get_reward(feature_matrix, theta, n_states, state_idx)
             next_state_idx = idx_state(env, next_state)
-            if episode >= 1000:
-                irl_reward = irl_rewards[state_idx]
-                update_q_table(state_idx, action, irl_reward, next_state_idx)
-            else:
-                update_q_table(state_idx, action, reward, next_state_idx)
+            update_q_table(state_idx, action, irl_reward, next_state_idx)
             
+            learner_feature_expectations += feature_matrix[int(state_idx)]
+
             score += reward
             state = next_state
             
@@ -92,7 +92,7 @@ def main():
             score_avg = np.mean(scores)
             print('{} episode score is {:.2f}'.format(episode, score_avg))
             pylab.plot(episodes, scores, 'b')
-            pylab.savefig("./learning_curves/maxent_eps_30000.png")
+            pylab.savefig("./learning_curves/maxent_30000.png")
             np.save("./results/maxent_q_table", arr=q_table)
 
 if __name__ == '__main__':
