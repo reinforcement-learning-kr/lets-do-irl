@@ -54,6 +54,7 @@ def main():
     env = gym.make('MountainCar-v0')
     demonstrations = idx_demo(env, one_feature)
 
+    expert = expert_feature_expectations(feature_matrix, demonstrations)
     learner_feature_expectations = np.zeros(n_states)
 
     theta = -(np.random.uniform(size=(n_states,)))
@@ -64,8 +65,7 @@ def main():
         state = env.reset()
         score = 0
 
-        if episode != 0 and episode == 10000 or (episode > 10000 and episode % 5000 == 0):
-            expert = expert_feature_expectations(feature_matrix, demonstrations)
+        if (episode != 0 and episode == 10000) or (episode > 10000 and episode % 5000 == 0):
             learner = learner_feature_expectations / episode
             maxent_irl(expert, learner, theta, theta_learning_rate)
                 
