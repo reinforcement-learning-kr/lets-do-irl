@@ -38,8 +38,8 @@ parser.add_argument('--total_sample_size', type=int, default=2048,
                     help='total sample size to collect before PPO update (default: 2048)')
 parser.add_argument('--batch_size', type=int, default=64, 
                     help='batch size to update (default: 64)')
-parser.add_argument('--max_iter_num', type=int, default=15000,
-                    help='maximal number of main iterations (default: 15000)')
+parser.add_argument('--max_iter_num', type=int, default=4000,
+                    help='maximal number of main iterations (default: 4000)')
 parser.add_argument('--seed', type=int, default=500,
                     help='random seed (default: 500)')
 parser.add_argument('--logdir', type=str, default='logs',
@@ -63,9 +63,9 @@ def main():
 
     actor_optim = optim.Adam(actor.parameters(), lr=args.learning_rate)
     critic_optim = optim.Adam(critic.parameters(), lr=args.learning_rate, 
-                              weight_decay=args.l2_rate) 
+                              weight_decay=args.l2_rate)
 
-    writer = SummaryWriter(args.logdir)
+    writer = SummaryWriter(comment="-ppo_iter-" + str(args.max_iter_num))
     
     if args.load_model is not None:
         saved_ckpt_path = os.path.join(os.getcwd(), 'save_model', str(args.load_model))
@@ -125,7 +125,7 @@ def main():
             scores.append(score)
         
         score_avg = np.mean(scores)
-        print('{} episode score is {:.2f}'.format(episodes, score_avg))
+        print('{}:: {} episode score is {:.2f}'.format(iter, episodes, score_avg))
         writer.add_scalar('log/score', float(score_avg), iter)
 
         actor.train(), critic.train()
