@@ -41,8 +41,12 @@ parser.add_argument('--total_sample_size', type=int, default=2048,
                     help='total sample size to collect before PPO update (default: 2048)')
 parser.add_argument('--batch_size', type=int, default=64, 
                     help='batch size to update (default: 64)')
-parser.add_argument('--max_iter_num', type=int, default=500,
-                    help='maximal number of main iterations (default: 500)')
+parser.add_argument('--suspend_accu_exp', type=float, default=0.8,
+                    help='accuracy for suspending discriminator about expert data (default: 0.8)')
+parser.add_argument('--suspend_accu_gen', type=float, default=0.8,
+                    help='accuracy for suspending discriminator about generated data (default: 0.8)')
+parser.add_argument('--max_iter_num', type=int, default=4000,
+                    help='maximal number of main iterations (default: 4000)')
 parser.add_argument('--seed', type=int, default=500,
                     help='random seed (default: 500)')
 parser.add_argument('--logdir', type=str, default='logs',
@@ -77,7 +81,9 @@ def main():
     print("demonstrations.shape", demonstrations.shape)
     
     # writer = SummaryWriter(args.logdir)
-    
+
+    writer = SummaryWriter(comment="-gail_discrim-" + str(args.discrim_update_num))
+
     if args.load_model is not None:
         saved_ckpt_path = os.path.join(os.getcwd(), 'save_model', str(args.load_model))
         ckpt = torch.load(saved_ckpt_path)
@@ -93,8 +99,8 @@ def main():
         print("Loaded OK ex. Zfilter N {}".format(running_state.rs.n))
 
     
-    episodes = 0    
-
+    episodes = 0
+    train_rewards = True
     for iter in range(args.max_iter_num):
         actor.eval(), critic.eval()
         memory = deque()
@@ -138,11 +144,17 @@ def main():
             scores.append(score)
         
         score_avg = np.mean(scores)
-        print('{} episode score is {:.2f}'.format(episodes, score_avg))
+        print('{}:: {} episode score is {:.2f}'.format(iter, episodes, score_avg))
+        writer.add_scalar('log/score', float(score_avg), iter)
         # writer.add_scalar('log/score', float(score_avg), iter)
 
-        actor.train(), critic.train(), discrim.train() 
-        train_discrim(discrim, memory, discrim_optim, demonstrations, args)
+        actor.train(), critic.train(), discrim.train()
+        if train_rewards:
+            exp_acc, gen_acc = train_discrim(discrim, memory, discrim_optim, demonstrations, args)
+            print("Experts: %.2f%% | Generated: %.2f%%" % (exp_acc * 100, gen_acc * 100))
+            if exp_acc > args.suspend_accu_exp and gen_acc > args.suspend_accu_gen:
+                train_rewards = False
+        #train_discrim(discrim, memory, discrim_optim, demonstrations, args)
         train_actor_critic(actor, critic, memory, actor_optim, critic_optim, args)
 
         # if iter % 100:

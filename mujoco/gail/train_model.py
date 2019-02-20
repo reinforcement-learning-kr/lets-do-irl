@@ -13,6 +13,7 @@ def train_discrim(discrim, memory, discrim_optim, demonstrations, args):
     criterion = torch.nn.BCELoss()
 
     for _ in range(args.discrim_update_num):
+        expert_state_action = torch.Tensor(demonstrations)
         learner = discrim(torch.cat([states, actions], dim=1))
         expert = discrim(torch.Tensor(demonstrations))
 
@@ -22,6 +23,11 @@ def train_discrim(discrim, memory, discrim_optim, demonstrations, args):
         discrim_optim.zero_grad()
         discrim_loss.backward()
         discrim_optim.step()
+
+    exp_acc = ((discrim(expert_state_action) < 0.5).float()).mean()
+    gen_acc = ((discrim(torch.cat([states, actions], dim=1)) > 0.5).float()).mean()
+
+    return exp_acc, gen_acc
 
 
 def train_actor_critic(actor, critic, memory, actor_optim, critic_optim, args):
