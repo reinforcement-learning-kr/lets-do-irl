@@ -47,6 +47,10 @@ parser.add_argument('--total_sample_size', type=int, default=2048,
                     help='total sample size to collect before PPO update (default: 2048)')
 parser.add_argument('--batch_size', type=int, default=64, 
                     help='batch size to update (default: 64)')
+parser.add_argument('--suspend_accu_exp', type=float, default=0.8,
+                    help='accuracy for suspending discriminator about expert data (default: 0.8)')
+parser.add_argument('--suspend_accu_gen', type=float, default=0.8,
+                    help='accuracy for suspending discriminator about generated data (default: 0.8)')
 parser.add_argument('--max_iter_num', type=int, default=4000,
                     help='maximal number of main iterations (default: 4000)')
 parser.add_argument('--seed', type=int, default=500,
@@ -151,7 +155,7 @@ def main():
         if train_rewards:
             exp_acc, gen_acc = train_vdb(vdb, memory, vdb_optim, demonstrations, 0, args)
             print("Experts: %.2f%% | Generated: %.2f%%" % (exp_acc * 100, gen_acc * 100))
-            if exp_acc > 0.9 and gen_acc > 0.9:
+            if exp_acc > args.suspend_accu_exp and gen_acc > args.suspend_accu_gen:
                 train_rewards = False
 
         #train_vdb(vdb, memory, vdb_optim, demonstrations, 0, args)
