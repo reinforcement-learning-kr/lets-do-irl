@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This repository contains PyTorch (v0.4.1) implementations of "Inverse Reinforcement Learning (IRL)" algorithms.
+This repository contains PyTorch (v0.4.1) implementations of **Inverse Reinforcement Learning (IRL)** algorithms.
 
 - Apprenticeship Learning via Inverse Reinforcement Learning [[2](#2)]
 - Maximum Entropy Inverse Reinforcement Learning [[4](#4)]
@@ -53,18 +53,19 @@ For reference, reviews of below papers related to IRL (in Korean) are located in
   - [Table of Contents](#table-of-contents)
   - [Mountain car](#mountain-car)
     - [1. Information](#1-information)
-    - [2. Train](#2-train)
-      - [Basic Usage](#basic-usage)
-      - [Test the pretrained model](#test-the-pretrained-model)
-    - [3. Trained Agent](#3-trained-agent)
+    - [2. Demonstrations](#2-demonstrations)
+    - [3. Train & Test](#3-train--test)
+      - [APP](#app)
+      - [MaxEnt](#maxent)
+    - [4. Trained Agent](#4-trained-agent)
   - [Mujoco Hopper](#mujoco-hopper)
     - [1. Installation](#1-installation)
-    - [2. Train](#2-train-1)
-      - [Basic Usage](#basic-usage-1)
-      - [Continue training from the saved checkpoint](#continue-training-from-the-saved-checkpoint)
-      - [Test the pretrained model](#test-the-pretrained-model-1)
-    - [3. Tensorboard](#3-tensorboard)
-    - [4. Trained Agent](#4-trained-agent)
+    - [2. Demonstrations](#2-demonstrations-1)
+    - [3. Train & Test](#3-train--test-1)
+      - [GAIL](#gail)
+      - [VAIL](#vail)
+    - [4. Tensorboard](#4-tensorboard)
+    - [5. Trained Agent](#5-trained-agent)
   - [Reference](#reference)
   - [Implementation team members](#implementation-team-members)
 
@@ -78,31 +79,49 @@ We have implemented `APP`, `MaxEnt` using Q-learning as RL step in `MountainCar-
 
 - [Mountain car Wiki](https://github.com/openai/gym/wiki/MountainCar-v0)
 
-### 2. Train
+### 2. Demonstrations
 
-If you want to use `APP`, Navigate to `lets-do-irl/mountaincar/app` folder.
+Navigate to `expert_demo.npy` in `lets-do-irl/mountaincar/app/expert_demo` or `lets-do-irl/mountaincar/maxent/expert_demo`.
 
-If you want to use `MaxEnt` instead of `APP`, Navigate to `lets-do-irl/mountaincar/maxent` folder.
+Shape of expert's demonstrations is (20, 130, 3); (number of demonstrations, length of demonstrations, state and action of demonstrations)
 
-#### Basic Usage
+If you make demonstrations, Navigate to `make_expert.py` in `lets-do-irl/mountaincar/app/expert_demo` or `lets-do-irl/mountaincar/maxent/expert_demo` folder.
 
-Train the agent wtih `APP`, `MaxEnt` without rendering.
+### 3. Train & Test
+
+#### APP
+
+Navigate to `lets-do-irl/mountaincar/app` folder.
+
+**Train** the agent wtih `APP` without rendering.
 
 ~~~
-python main.py
+python train.py
 ~~~
 
-#### Test the pretrained model
-
-If you want to test `APP`, Test the agent with the saved model `app_q_table.npy` in `app/results` folder.
-
-If you want to test `Maxent` instead of `APP`, Test the agent with the saved model `maxent_q_table.npy` in `maxent/results` folder.
+If you want to **test** `APP`, Test the agent with the saved model `app_q_table.npy` in `app/results` folder.
 
 ~~~
 python test.py
 ~~~
 
-### 3. Trained Agent
+#### MaxEnt
+
+Navigate to `lets-do-irl/mountaincar/maxent` folder.
+
+**Train** the agent wtih `MaxEnt` without rendering.
+
+~~~
+python train.py
+~~~
+
+If you want to **test** `MaxEnt`, Test the agent with the saved model `maxent_q_table.npy` in `maxent/results` folder.
+
+~~~
+python test.py
+~~~
+
+### 4. Trained Agent
 
 We have trained the agents with two different IRL algortihms using `MountainCar-v0` environment.
 
@@ -120,43 +139,77 @@ We have implemented `GAIL`, `VAIL` using PPO as RL step in `Hopper-v2` environme
 - [Mac OS (in Korean)](https://dongminlee.tistory.com/38)
 - [Ubuntu](https://github.com/reinforcement-learning-kr/pg_travel/wiki/Installing-Mujoco-py-on-Linux)
 
-### 2. Train 
+### 2. Demonstrations
 
-If you want to use `GAIL`, Navigate to `lets-do-irl/mujoco/gail` folder.
+Navigate to `expert_demo.p` in `lets-do-irl/mujoco/gail/expert_demo` or `lets-do-irl/mujoco/vail/expert_demo`.
 
-If you want to use `VAIL` instead of `GAIL`, Navigate to `lets-do-irl/mujoco/vail` folder.
+Shape of expert's demonstrations is (50000, 14); (number of demonstrations, state and action of demonstrations)
 
-#### Basic Usage
+Learning curve of Demonstrations is below figure.
 
-Train the agent wtih `GAIL`, `VAIL` without rendering.
+![image](img/demo.png)
+
+If you make demonstrations, Navigate to `main.py` in `lets-do-irl/mojoco/ppo` folder.
+
+### 3. Train & Test
+
+#### GAIL
+
+Navigate to `lets-do-irl/mujoco/gail` folder.
+
+**Train** the agent wtih `GAIL` without rendering.
 
 ~~~
 python main.py
 ~~~
-* **env**: Ant-v2, HalfCheetah-v2, **Hopper-v2**(default), Humanoid-v2, HumanoidStandup-v2, InvertedPendulum-v2, Reacher-v2, Swimmer-v2, Walker2d-v2
 
-#### Continue training from the saved checkpoint
+- **env**: Ant-v2, HalfCheetah-v2, **Hopper-v2**(default), Humanoid-v2, HumanoidStandup-v2, InvertedPendulum-v2, Reacher-v2, Swimmer-v2, Walker2d-v2
+
+If you want to **Continue training** from the saved checkpoint,
 
 ~~~
 python main.py --load_model ckpt_4000.pth.tar
 ~~~
-* Note that `ckpt_4000.pth.tar` file should be in the `lets-do-irl/mujoco/save_model` folder.
 
-#### Test the pretrained model
+- Note that `ckpt_4000.pth.tar` file should be in the `mujoco/gail/save_model` folder.
 
-Test the agent with the saved model `ckpt_4000.pth.tar` in `gail/save_model` folder.
-
-~~~
-python test.py --load_model ckpt_4000.pth.tar --iter 5
-~~~
-
-Or, Test the agent with the saved model `ckpt_4000.pth.tar` in `vail/save_model` folder.
+If you want to **test** `GAIL`, Test the agent with the saved model `ckpt_4000.pth.tar` in the `mujoco/gail/save_model` folder.
 
 ~~~
-python test.py --load_model ckpt_4000.pth.tar --iter 5
+python test.py --load_model ckpt_4000.pth.tar
 ~~~
 
-### 3. Tensorboard
+- Note that `ckpt_4000.pth.tar` file should be in the `mujoco/gail/save_model` folder.
+
+#### VAIL
+
+Navigate to `lets-do-irl/mujoco/vail` folder.
+
+**Train** the agent wtih `VAIL` without rendering.
+
+~~~
+python main.py
+~~~
+
+- **env**: Ant-v2, HalfCheetah-v2, **Hopper-v2**(default), Humanoid-v2, HumanoidStandup-v2, InvertedPendulum-v2, Reacher-v2, Swimmer-v2, Walker2d-v2
+
+If you want to **Continue training** from the saved checkpoint,
+
+~~~
+python main.py --load_model ckpt_4000.pth.tar
+~~~
+
+- Note that `ckpt_4000.pth.tar` file should be in the `mujoco/vail/save_model` folder.
+
+If you want to **test** `VAIL`, Test the agent with the saved model `ckpt_4000.pth.tar` in the `mujoco/vail/save_model` folder.
+
+~~~
+python test.py --load_model ckpt_4000.pth.tar
+~~~
+
+- Note that `ckpt_4000.pth.tar` file should be in the `mujoco/vail/save_model` folder.
+
+### 4. Tensorboard
 
 Note that the results of trainings are automatically saved in `logs` folder. TensorboardX is the Tensorboard-like visualization tool for Pytorch.
 
@@ -166,7 +219,7 @@ Navigate to the `lets-do-irl/mujoco/gail` or `lets-do-irl/mujoco/vail` folder.
 tensorboard --logdir logs
 ~~~
 
-### 4. Trained Agent
+### 5. Trained Agent
 
 We have trained the agents with two different IRL algortihms using `Hopper-v2` environment.
 
