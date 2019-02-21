@@ -2,12 +2,12 @@
 
 ## Introduction
 
-This repository contains PyTorch (v0.4.1) implementations of inverse reinforcement learning (IRL) algorithms.
+This repository contains PyTorch (v0.4.1) implementations of "Inverse Reinforcement Learning (IRL)" algorithms.
 
-- Apprenticeship Learning via Inverse Reinforcement Learning [[2](#2)]
+- Apprenticeship Learning via Inverse Reinforcement Learning [[1](#1)]
 - Maximum Entropy Inverse Reinforcement Learning [[4](#4)]
 - Generative Adversarial Imitation Learning [[5](#5)]
-- Variational Discriminator Bottleneck: Improving Imitation Learning, Inverse RL, and GANs by Constraining Information Flow [[6](#6)]
+- Variational Discriminator Bottleneck: Improving Imitation Learning, Inverse RL, and GANs by Constraining Information Flow [[7](#7)]
 
 We have implemented and trained the agents with the IRL algorithms using the following environments.
 
@@ -17,18 +17,12 @@ We have implemented and trained the agents with the IRL algorithms using the fol
 
 For reference, reviews of below papers related to IRL (in Korean) are located in [Let's do Inverse RL Guide](https://reinforcement-learning-kr.github.io/2019/01/22/0_lets-do-irl-guide/).
 
-<a name="1"></a>
-- [1] AY. Ng, et al., "Algorithms for Inverse Reinforcement Learning", ICML 2000.
-<a name="2"></a>
-- [2] P. Abbeel, et al., "Apprenticeship Learning via Inverse Reinforcement Learning", ICML 2004.
-<a name="3"></a>
-- [3] ND. Ratliff, et al., "Maximum Margin Planning", ICML 2006.
-<a name="4"></a>
-- [4] BD. Ziebart, et al., "Maximum Entropy Inverse Reinforcement Learning", AAAI 2008.
-<a name="5"></a>
-- [5] J. Ho, et al., "Generative Adversarial Imitation Learning", NIPS 2016.
-<a name="6"></a>
-- [6] XB. Peng, et al., "Variational Discriminator Bottleneck. Improving Imitation Learning, Inverse RL, and GANs by Constraining Information Flow", ICLR 2019.
+- [1] [AY. Ng, et al., "Algorithms for Inverse Reinforcement Learning", ICML 2000.](http://ai.stanford.edu/~ang/papers/icml00-irl.pdf)
+- [2] [P. Abbeel, et al., "Apprenticeship Learning via Inverse Reinforcement Learning", ICML 2004.](http://people.eecs.berkeley.edu/~russell/classes/cs294/s11/readings/Abbeel+Ng:2004.pdf)
+- [3] [ND. Ratliff, et al., "Maximum Margin Planning", ICML 2006.](https://www.ri.cmu.edu/pub_files/pub4/ratliff_nathan_2006_1/ratliff_nathan_2006_1.pdf)
+- [4] [BD. Ziebart, et al., "Maximum Entropy Inverse Reinforcement Learning", AAAI 2008.](http://www.aaai.org/Papers/AAAI/2008/AAAI08-227.pdf)
+- [5] [J. Ho, et al., "Generative Adversarial Imitation Learning", NIPS 2016.](https://papers.nips.cc/paper/6391-generative-adversarial-imitation-learning.pdf)
+- [6] [XB. Peng, et al., "Variational Discriminator Bottleneck. Improving Imitation Learning, Inverse RL, and GANs by Constraining Information Flow", ICLR 2019.](https://arxiv.org/pdf/1810.00821.pdf)
 
 ## Table of Contents
 
