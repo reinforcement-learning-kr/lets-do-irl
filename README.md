@@ -1,5 +1,7 @@
 # Let's do Inverse RL
 
+![image](img/irl.png)
+
 ## Introduction
 
 This repository contains PyTorch (v0.4.1) implementations of "Inverse Reinforcement Learning (IRL)" algorithms.
