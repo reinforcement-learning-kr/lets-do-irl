@@ -53,6 +53,7 @@ For reference, reviews of below papers related to IRL (in Korean) are located in
     - [3. Tensorboard](#3-tensorboard)
     - [4. Trained Agent](#4-trained-agent)
   - [Reference](#reference)
+  - [Implementation team members](#implementation-team-members)
 
 <!-- /code_chunk_output -->
 
@@ -170,3 +171,13 @@ We referenced the codes from below repositories.
 - [Implementation of MaxEnt](https://github.com/MatthewJA/Inverse-Reinforcement-Learning)
 - [Pytorch implementation for Policy Gradient algorithms (REINFORCE, NPG, TRPO, PPO)](https://github.com/reinforcement-learning-kr/pg_travel)
 - [Pytorch implementation of GAIL](https://github.com/Khrylx/PyTorch-RL)
+
+## Implementation team members
+
+Dongmin Lee : [Github](https://github.com/dongminleeai), [Facebook](https://www.facebook.com/dongminleeai)
+
+Seungje Yoon : [Github](https://github.com/sjYoondeltar), [Facebook](https://www.facebook.com/seungje.yoon)
+
+Seunghyun Lee : [Github](https://github.com/Clyde21c), [Facebook](https://www.facebook.com/Clyde21c)
+
+Geonhee Lee : [Github](https://github.com/Geonhee-LEE), [Facebook](https://www.facebook.com/Geonheeee)
