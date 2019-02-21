@@ -13,9 +13,9 @@ def train_vdb(vdb, memory, vdb_optim, demonstrations, beta, args):
     criterion = torch.nn.BCELoss()
 
     for _ in range(args.vdb_update_num):
-        expert_state_action = torch.Tensor(demonstrations)
         learner, l_mu, l_logvar = vdb(torch.cat([states, actions], dim=1))
-        expert, e_mu, e_logvar = vdb(torch.Tensor(demonstrations))
+        demonstrations = torch.Tensor(demonstrations)
+        expert, e_mu, e_logvar = vdb(demonstrations)
 
         l_kld = kl_divergence(l_mu, l_logvar)
         l_kld = l_kld.mean()
@@ -29,20 +29,20 @@ def train_vdb(vdb, memory, vdb_optim, demonstrations, beta, args):
         beta = max(0, beta + args.alpha_beta * bottleneck_loss)
 
         vdb_loss = criterion(learner, torch.ones((states.shape[0], 1))) + \
-                        criterion(expert, torch.zeros((demonstrations.shape[0], 1))) + \
-                        beta * bottleneck_loss
+                    criterion(expert, torch.zeros((demonstrations.shape[0], 1))) + \
+                    beta * bottleneck_loss
                 
         vdb_optim.zero_grad()
         vdb_loss.backward(retain_graph=True)
         vdb_optim.step()
 
-    exp_acc = ((vdb(expert_state_action)[0] < 0.5).float()).mean()
-    gen_acc = ((vdb(torch.cat([states, actions], dim=1))[0] > 0.5).float()).mean()
+    expert_acc = ((vdb(demonstrations)[0] < 0.5).float()).mean()
+    learner_acc = ((vdb(torch.cat([states, actions], dim=1))[0] > 0.5).float()).mean()
 
-    return exp_acc, gen_acc
+    return expert_acc, learner_acc
     
 
-def train_ppo(actor, critic, memory, actor_optim, critic_optim, args):
+def train_actor_critic(actor, critic, memory, actor_optim, critic_optim, args):
     memory = np.array(memory) 
     states = np.vstack(memory[:, 0]) 
     actions = list(memory[:, 1]) 

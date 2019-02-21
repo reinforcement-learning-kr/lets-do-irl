@@ -80,9 +80,7 @@ def main():
     demonstrations = np.array(expert_demo)
     print("demonstrations.shape", demonstrations.shape)
     
-    # writer = SummaryWriter(args.logdir)
-
-    writer = SummaryWriter(comment="-gail_discrim-" + str(args.discrim_update_num))
+    writer = SummaryWriter(args.logdir)
 
     if args.load_model is not None:
         saved_ckpt_path = os.path.join(os.getcwd(), 'save_model', str(args.load_model))
@@ -100,7 +98,8 @@ def main():
 
     
     episodes = 0
-    train_rewards = True
+    train_discrim_flag = True
+
     for iter in range(args.max_iter_num):
         actor.eval(), critic.eval()
         memory = deque()
@@ -146,36 +145,34 @@ def main():
         score_avg = np.mean(scores)
         print('{}:: {} episode score is {:.2f}'.format(iter, episodes, score_avg))
         writer.add_scalar('log/score', float(score_avg), iter)
-        # writer.add_scalar('log/score', float(score_avg), iter)
 
         actor.train(), critic.train(), discrim.train()
-        if train_rewards:
-            exp_acc, gen_acc = train_discrim(discrim, memory, discrim_optim, demonstrations, args)
-            print("Experts: %.2f%% | Generated: %.2f%%" % (exp_acc * 100, gen_acc * 100))
-            if exp_acc > args.suspend_accu_exp and gen_acc > args.suspend_accu_gen:
-                train_rewards = False
-        #train_discrim(discrim, memory, discrim_optim, demonstrations, args)
+        if train_discrim_flag:
+            expert_acc, learner_acc = train_discrim(discrim, memory, discrim_optim, demonstrations, args)
+            print("Expert: %.2f%% | Learner: %.2f%%" % (expert_acc * 100, learner_acc * 100))
+            if expert_acc > args.suspend_accu_exp and learner_acc > args.suspend_accu_gen:
+                train_discrim_flag = False
         train_actor_critic(actor, critic, memory, actor_optim, critic_optim, args)
 
-        # if iter % 100:
-        #     score_avg = int(score_avg)
+        if iter % 100:
+            score_avg = int(score_avg)
 
-        #     model_path = os.path.join(os.getcwd(),'save_model')
-        #     if not os.path.isdir(model_path):
-        #         os.makedirs(model_path)
+            model_path = os.path.join(os.getcwd(),'save_model')
+            if not os.path.isdir(model_path):
+                os.makedirs(model_path)
 
-        #     ckpt_path = os.path.join(model_path, 'ckpt_'+ str(score_avg)+'.pth.tar')
+            ckpt_path = os.path.join(model_path, 'ckpt_'+ str(score_avg)+'.pth.tar')
 
-        #     save_checkpoint({
-        #         'actor': actor.state_dict(),
-        #         'critic': critic.state_dict(),
-        #         'discrim': discrim.state_dict(),
-        #         'z_filter_n':running_state.rs.n,
-        #         'z_filter_m': running_state.rs.mean,
-        #         'z_filter_s': running_state.rs.sum_square,
-        #         'args': args,
-        #         'score': score_avg
-        #     }, filename=ckpt_path)
+            save_checkpoint({
+                'actor': actor.state_dict(),
+                'critic': critic.state_dict(),
+                'discrim': discrim.state_dict(),
+                'z_filter_n':running_state.rs.n,
+                'z_filter_m': running_state.rs.mean,
+                'z_filter_s': running_state.rs.sum_square,
+                'args': args,
+                'score': score_avg
+            }, filename=ckpt_path)
 
 if __name__=="__main__":
     main()
