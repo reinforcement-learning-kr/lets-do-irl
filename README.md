@@ -92,10 +92,10 @@ python test.py
 
 We have trained the agents with two different IRL algortihms using `MountainCar-v0` environment.
 
-| Algorithm | Score / Eps | GIF |
+| Algorithms | Scores / Episodes | GIF |
 |:---:|:---:|:---:|
-| APP | ![app](img/app_eps_60000.png) | <img src="img/test_rendering_60000.gif" width="400"/> |
-| MaxEnt | ![maxent](img/maxent_eps_30000.png) | <img src="img/test_rendering_30000.gif" width="400"/> |
+| APP | ![app](img/app_eps_60000.png) | <img src="img/test_rendering_60000.gif" width="500"/> |
+| MaxEnt | ![maxent](img/maxent_eps_30000.png) | <img src="img/test_rendering_30000.gif" width="500"/> |
 
 ## Mujoco Hopper
 
@@ -156,11 +156,11 @@ tensorboard --logdir logs
 
 We have trained the agents with two different IRL algortihms using `Hopper-v2` environment.
 
-| Algorithm | Score / Episodes | GIF |
+| Algorithms | Scores / Episodes | GIF |
 |:---:|:---:|:---:|
 | PPO (to compare) | ![ppo](img/test.png) | <img src="img/test.gif" height="180px" width="250px"/> |
-| GAIL | ![gail](img/test.png) | <img src="img/test.gif" height="180px" width="250px"/> |
-| VAIL | ![vail](img/test.png) | <img src="img/test.gif" height="180px" width="250px"/> |
+| GAIL | ![gail](img/test.png) | <img src="img/test.gif" width="500"/> |
+| VAIL | ![vail](img/test.png) | <img src="img/test.gif" width="500"/> |
 
 ## Reference
 
