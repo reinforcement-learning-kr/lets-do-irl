@@ -4,10 +4,10 @@
 
 This repository contains PyTorch (v0.4.1) implementations of "Inverse Reinforcement Learning (IRL)" algorithms.
 
-- Apprenticeship Learning via Inverse Reinforcement Learning [[1](#1)]
+- Apprenticeship Learning via Inverse Reinforcement Learning [[2](#2)]
 - Maximum Entropy Inverse Reinforcement Learning [[4](#4)]
 - Generative Adversarial Imitation Learning [[5](#5)]
-- Variational Discriminator Bottleneck: Improving Imitation Learning, Inverse RL, and GANs by Constraining Information Flow [[7](#7)]
+- Variational Discriminator Bottleneck: Improving Imitation Learning, Inverse RL, and GANs by Constraining Information Flow [[6](#6)]
 
 We have implemented and trained the agents with the IRL algorithms using the following environments.
 
