@@ -15,7 +15,7 @@ We have implemented and trained the agents with the IRL algorithms using the fol
 - [Mujoco Hopper](https://gym.openai.com/envs/Hopper-v2/)
 - [Unity ML-Agent Walker](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#walker)
 
-For reference, reviews of below papers related to IRL (in Korean) are located in [Lets do Inverse RL Guide](https://reinforcement-learning-kr.github.io/2019/01/22/0_lets-do-irl-guide/).
+For reference, reviews of below papers related to IRL (in Korean) are located in [Let's do Inverse RL Guide](https://reinforcement-learning-kr.github.io/2019/01/22/0_lets-do-irl-guide/).
 
 <a name="1"></a>
 - [1] AY. Ng, et al., "Algorithms for Inverse Reinforcement Learning", ICML 2000.
@@ -94,8 +94,8 @@ We have trained the agents with two different IRL algortihms using `MountainCar-
 
 | Algorithm | Score / Eps | GIF |
 |:---:|:---:|:---:|
-| APP | ![app](img/app_eps_60000.png) | <img src="img/test_rendering_60000.gif" height="180px" width="250px"/> |
-| MaxEnt | ![maxent](img/maxent_eps_30000.png) | <img src="img/test_rendering_30000.gif" height="180px" width="250px"/> |
+| APP | ![app](img/app_eps_60000.png) | <img src="img/test_rendering_60000.gif" width="400"/> |
+| MaxEnt | ![maxent](img/maxent_eps_30000.png) | <img src="img/test_rendering_30000.gif" width="400"/> |
 
 ## Mujoco Hopper
 
