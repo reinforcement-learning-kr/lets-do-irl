@@ -1,6 +1,6 @@
 # Let's do Inverse RL
 
-![image](img/irl_logo.png)
+![image](img/irl.png)
 
 ## Introduction
 
