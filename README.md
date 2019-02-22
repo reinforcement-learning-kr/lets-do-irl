@@ -145,9 +145,7 @@ Navigate to `expert_demo.p` in `lets-do-irl/mujoco/gail/expert_demo` or `lets-do
 
 Shape of expert's demonstrations is (50000, 14); (number of demonstrations, state and action of demonstrations)
 
-We used demonstrations that get scores between about 2200 and 2600 on average. Learning curve of demonstrations is below figure.
-
-![image](img/ppo_score.png)
+We used demonstrations that get scores between about 2200 and 2600 on average.
 
 If you want to make demonstrations, Navigate to `main.py` in `lets-do-irl/mojoco/ppo` folder.
 
