@@ -223,11 +223,11 @@ tensorboard --logdir logs
 
 We have trained the agents with two different IRL algortihms using `Hopper-v2` environment.
 
-| Algorithms | Scores / Episodes | GIF |
-|:---:|:---:|:---:|
-| PPO (to compare) | ![ppo](img/test.png) | <img src="img/test.gif" height="180px" width="250px"/> |
-| GAIL | ![gail](img/test.png) | <img src="img/test.gif" width="500"/> |
-| VAIL | ![vail](img/test.png) | <img src="img/test.gif" width="500"/> |
+| Algorithms | Scores / Episodes |
+|:---:|:---:|
+| PPO (to compare) | ![ppo](img/ppo_4000.png) |
+| GAIL | ![gail](img/gail_4000.png) |
+| VAIL | ![vail](img/vail_4000.png) |
 
 ## Reference
 
