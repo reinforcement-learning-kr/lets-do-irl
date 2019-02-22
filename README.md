@@ -228,6 +228,7 @@ We have trained the agents with two different IRL algortihms using `Hopper-v2` e
 | PPO (to compare) | ![ppo](img/ppo_4000.png) |
 | GAIL | ![gail](img/gail_4000.png) |
 | VAIL | ![vail](img/vail_4000.png) |
+| Total | ![total](img/mujoco_total.png) |
 
 ## Reference
 
