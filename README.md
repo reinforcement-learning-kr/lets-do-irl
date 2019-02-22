@@ -145,7 +145,7 @@ Navigate to `expert_demo.p` in `lets-do-irl/mujoco/gail/expert_demo` or `lets-do
 
 Shape of expert's demonstrations is (50000, 14); (number of demonstrations, state and action of demonstrations)
 
-Learning curve of demonstrations is below figure.
+We used demonstrations that get scores between about 2200 and 2600 on average. Learning curve of demonstrations is below figure.
 
 ![image](img/ppo_score.png)
 
@@ -223,7 +223,7 @@ tensorboard --logdir logs
 
 We have trained the agents with two different IRL algortihms using `Hopper-v2` environment.
 
-| Algorithms | Scores / Iterations (Total sample size : 2048) |
+| Algorithms | Scores / Iterations (total sample size : 2048) |
 |:---:|:---:|
 | PPO (to compare) | ![ppo](img/ppo_4000.png) |
 | GAIL | ![gail](img/gail_4000.png) |
