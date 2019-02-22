@@ -168,18 +168,18 @@ python main.py
 If you want to **Continue training** from the saved checkpoint,
 
 ~~~
-python main.py --load_model ckpt_4000.pth.tar
+python main.py --load_model ckpt_4000_gail.pth.tar
 ~~~
 
-- Note that `ckpt_4000.pth.tar` file should be in the `mujoco/gail/save_model` folder.
+- Note that `ckpt_4000_gail.pth.tar` file should be in the `mujoco/gail/save_model` folder.
 
-If you want to test `GAIL`, **Test** the agent with the saved model `ckpt_4000.pth.tar` in the `mujoco/gail/save_model` folder.
+If you want to test `GAIL`, **Test** the agent with the saved model `ckpt_4000_gail.pth.tar` in the `mujoco/gail/save_model` folder.
 
 ~~~
-python test.py --load_model ckpt_4000.pth.tar
+python test.py --load_model ckpt_4000_gail.pth.tar
 ~~~
 
-- Note that `ckpt_4000.pth.tar` file should be in the `mujoco/gail/save_model` folder.
+- Note that `ckpt_4000_gail.pth.tar` file should be in the `mujoco/gail/save_model` folder.
 
 #### VAIL
 
@@ -196,18 +196,18 @@ python main.py
 If you want to **Continue training** from the saved checkpoint,
 
 ~~~
-python main.py --load_model ckpt_4000.pth.tar
+python main.py --load_model ckpt_4000_vail.pth.tar
 ~~~
 
-- Note that `ckpt_4000.pth.tar` file should be in the `mujoco/vail/save_model` folder.
+- Note that `ckpt_4000_vail.pth.tar` file should be in the `mujoco/vail/save_model` folder.
 
-If you want to test `VAIL`, **Test** the agent with the saved model `ckpt_4000.pth.tar` in the `mujoco/vail/save_model` folder.
+If you want to test `VAIL`, **Test** the agent with the saved model `ckpt_4000_vail.pth.tar` in the `mujoco/vail/save_model` folder.
 
 ~~~
-python test.py --load_model ckpt_4000.pth.tar
+python test.py --load_model ckpt_4000_vail.pth.tar
 ~~~
 
-- Note that `ckpt_4000.pth.tar` file should be in the `mujoco/vail/save_model` folder.
+- Note that `ckpt_4000_vail.pth.tar` file should be in the `mujoco/vail/save_model` folder.
 
 ### 4. Tensorboard
 
