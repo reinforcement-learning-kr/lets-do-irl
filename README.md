@@ -149,7 +149,7 @@ We used demonstrations that get scores between about 2200 and 2600 on average. L
 
 ![image](img/ppo_score.png)
 
-If you make demonstrations, Navigate to `main.py` in `lets-do-irl/mojoco/ppo` folder.
+If you want to make demonstrations, Navigate to `main.py` in `lets-do-irl/mojoco/ppo` folder.
 
 ### 3. Train & Test
 
