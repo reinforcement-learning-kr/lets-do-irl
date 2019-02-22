@@ -99,7 +99,7 @@ Navigate to `lets-do-irl/mountaincar/app` folder.
 python train.py
 ~~~
 
-If you want to **test** `APP`, Test the agent with the saved model `app_q_table.npy` in `app/results` folder.
+If you want to test `APP`, **Test** the agent with the saved model `app_q_table.npy` in `app/results` folder.
 
 ~~~
 python test.py
@@ -115,7 +115,7 @@ Navigate to `lets-do-irl/mountaincar/maxent` folder.
 python train.py
 ~~~
 
-If you want to **test** `MaxEnt`, Test the agent with the saved model `maxent_q_table.npy` in `maxent/results` folder.
+If you want to test `MaxEnt`, **Test** the agent with the saved model `maxent_q_table.npy` in `maxent/results` folder.
 
 ~~~
 python test.py
@@ -173,7 +173,7 @@ python main.py --load_model ckpt_4000.pth.tar
 
 - Note that `ckpt_4000.pth.tar` file should be in the `mujoco/gail/save_model` folder.
 
-If you want to **test** `GAIL`, Test the agent with the saved model `ckpt_4000.pth.tar` in the `mujoco/gail/save_model` folder.
+If you want to test `GAIL`, **Test** the agent with the saved model `ckpt_4000.pth.tar` in the `mujoco/gail/save_model` folder.
 
 ~~~
 python test.py --load_model ckpt_4000.pth.tar
@@ -201,7 +201,7 @@ python main.py --load_model ckpt_4000.pth.tar
 
 - Note that `ckpt_4000.pth.tar` file should be in the `mujoco/vail/save_model` folder.
 
-If you want to **test** `VAIL`, Test the agent with the saved model `ckpt_4000.pth.tar` in the `mujoco/vail/save_model` folder.
+If you want to test `VAIL`, **Test** the agent with the saved model `ckpt_4000.pth.tar` in the `mujoco/vail/save_model` folder.
 
 ~~~
 python test.py --load_model ckpt_4000.pth.tar
