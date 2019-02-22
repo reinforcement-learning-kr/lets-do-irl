@@ -151,6 +151,8 @@ We used demonstrations that get scores between about 2200 and 2600 on average. L
 
 If you want to make demonstrations, Navigate to `main.py` in `lets-do-irl/mojoco/ppo` folder.
 
+Also, you can see detailed implementation story (in Korean) of PPO in [PG Travel implementation story](https://reinforcement-learning-kr.github.io/2018/08/23/8_implement/).
+
 ### 3. Train & Test
 
 #### GAIL
