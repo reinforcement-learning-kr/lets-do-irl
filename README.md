@@ -147,7 +147,7 @@ Shape of expert's demonstrations is (50000, 14); (number of demonstrations, stat
 
 Learning curve of demonstrations is below figure.
 
-![image](img/demo.png)
+![image](img/ppo_score.png)
 
 If you make demonstrations, Navigate to `main.py` in `lets-do-irl/mojoco/ppo` folder.
 
@@ -223,7 +223,7 @@ tensorboard --logdir logs
 
 We have trained the agents with two different IRL algortihms using `Hopper-v2` environment.
 
-| Algorithms | Scores / Episodes |
+| Algorithms | Scores / Iterations (Total sample size : 2048) |
 |:---:|:---:|
 | PPO (to compare) | ![ppo](img/ppo_4000.png) |
 | GAIL | ![gail](img/gail_4000.png) |
