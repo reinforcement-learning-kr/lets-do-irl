@@ -38,8 +38,8 @@ parser.add_argument('--total_sample_size', type=int, default=2048,
                     help='total sample size to collect before PPO update (default: 2048)')
 parser.add_argument('--batch_size', type=int, default=64, 
                     help='batch size to update (default: 64)')
-parser.add_argument('--max_iter_num', type=int, default=15000,
-                    help='maximal number of main iterations (default: 15000)')
+parser.add_argument('--max_iter_num', type=int, default=12000,
+                    help='maximal number of main iterations (default: 12000)')
 parser.add_argument('--seed', type=int, default=500,
                     help='random seed (default: 500)')
 parser.add_argument('--logdir', type=str, default='logs',
