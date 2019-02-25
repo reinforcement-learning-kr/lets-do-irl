@@ -15,7 +15,6 @@ We have implemented and trained the agents with the IRL algorithms using the fol
 
 - [OpenAI GYM Mountain car](https://gym.openai.com/envs/MountainCar-v0/)
 - [Mujoco Hopper](https://gym.openai.com/envs/Hopper-v2/)
-- [Unity ML-Agent Walker](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#walker)
 
 For reference, reviews of below papers related to IRL (in Korean) are located in [Let's do Inverse RL Guide](https://reinforcement-learning-kr.github.io/2019/01/22/0_lets-do-irl-guide/).
 
