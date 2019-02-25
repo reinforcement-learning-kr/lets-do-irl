@@ -240,7 +240,7 @@ We referenced the codes from below repositories.
 
 ## Implementation team members
 
-Dongmin Lee : [Github](https://github.com/dongminleeai), [Facebook](https://www.facebook.com/dongminleeai)
+Dongmin Lee (project manager) : [Github](https://github.com/dongminleeai), [Facebook](https://www.facebook.com/dongminleeai)
 
 Seungje Yoon : [Github](https://github.com/sjYoondeltar), [Facebook](https://www.facebook.com/seungje.yoon)
 
