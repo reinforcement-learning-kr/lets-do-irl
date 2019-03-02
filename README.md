@@ -162,8 +162,6 @@ Navigate to `lets-do-irl/mujoco/gail` folder.
 python main.py
 ~~~
 
-- **env**: Ant-v2, HalfCheetah-v2, **Hopper-v2**(default), Humanoid-v2, HumanoidStandup-v2, InvertedPendulum-v2, Reacher-v2, Swimmer-v2, Walker2d-v2
-
 If you want to **Continue training** from the saved checkpoint,
 
 ~~~
@@ -189,8 +187,6 @@ Navigate to `lets-do-irl/mujoco/vail` folder.
 ~~~
 python main.py
 ~~~
-
-- **env**: Ant-v2, HalfCheetah-v2, **Hopper-v2**(default), Humanoid-v2, HumanoidStandup-v2, InvertedPendulum-v2, Reacher-v2, Swimmer-v2, Walker2d-v2
 
 If you want to **Continue training** from the saved checkpoint,
 
