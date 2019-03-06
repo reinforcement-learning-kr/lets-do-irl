@@ -80,17 +80,17 @@ We have implemented `APP`, `MaxEnt` using Q-learning as RL step in `MountainCar-
 
 ### 2. Expert's demonstrations
 
-Navigate to `expert_demo.npy` in `lets-do-irl/mountaincar/app/expert_demo` or `lets-do-irl/mountaincar/maxent/expert_demo`.
+Navigate to `expert_demo.npy` in [lets-do-irl/mountaincar/app/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mountaincar/app/expert_demo) or [lets-do-irl/mountaincar/maxent/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mountaincar/maxent/expert_demo).
 
 Shape of expert's demonstrations is (20, 130, 3); (number of demonstrations, length of demonstrations, state and action of demonstrations)
 
-If you make demonstrations, Navigate to `make_expert.py` in `lets-do-irl/mountaincar/app/expert_demo` or `lets-do-irl/mountaincar/maxent/expert_demo` folder.
+If you make demonstrations, Navigate to `make_expert.py` in [lets-do-irl/mountaincar/app/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mountaincar/app/expert_demo) or [lets-do-irl/mountaincar/maxent/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mountaincar/maxent/expert_demo).
 
 ### 3. Train & Test
 
 #### APP
 
-Navigate to `lets-do-irl/mountaincar/app` folder.
+Navigate to [lets-do-irl/mountaincar/app](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mountaincar/app) folder.
 
 **Train** the agent wtih `APP` without rendering.
 
@@ -106,7 +106,7 @@ python test.py
 
 #### MaxEnt
 
-Navigate to `lets-do-irl/mountaincar/maxent` folder.
+Navigate to [lets-do-irl/mountaincar/maxent](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mountaincar/maxent) folder.
 
 **Train** the agent wtih `MaxEnt` without rendering.
 
@@ -140,13 +140,13 @@ We have implemented `GAIL`, `VAIL` using PPO as RL step in `Hopper-v2` environme
 
 ### 2. Expert's demonstrations
 
-Navigate to `expert_demo.p` in `lets-do-irl/mujoco/gail/expert_demo` or `lets-do-irl/mujoco/vail/expert_demo`.
+Navigate to `expert_demo.p` in [lets-do-irl/mujoco/gail/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mujoco/gail/expert_demo) or [lets-do-irl/mujoco/vail/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mujoco/vail/expert_demo).
 
 Shape of expert's demonstrations is (50000, 14); (number of demonstrations, state and action of demonstrations)
 
 We used demonstrations that get scores between about 2200 and 2600 on average.
 
-If you want to make demonstrations, Navigate to `main.py` in `lets-do-irl/mojoco/ppo` folder.
+If you want to make demonstrations, Navigate to `main.py` in [lets-do-irl/mojoco/ppo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mujoco/ppo) folder.
 
 Also, you can see detailed implementation story (in Korean) of PPO in [PG Travel implementation story](https://reinforcement-learning-kr.github.io/2018/08/23/8_implement/).
 
@@ -154,7 +154,7 @@ Also, you can see detailed implementation story (in Korean) of PPO in [PG Travel
 
 #### GAIL
 
-Navigate to `lets-do-irl/mujoco/gail` folder.
+Navigate to [lets-do-irl/mujoco/gail](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mujoco/gail) folder.
 
 **Train** the agent wtih `GAIL` without rendering.
 
@@ -180,7 +180,7 @@ python test.py --load_model ckpt_4000_gail.pth.tar
 
 #### VAIL
 
-Navigate to `lets-do-irl/mujoco/vail` folder.
+Navigate to [lets-do-irl/mujoco/vail](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mujoco/vail) folder.
 
 **Train** the agent wtih `VAIL` without rendering.
 
