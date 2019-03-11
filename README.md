@@ -82,7 +82,7 @@ We have implemented `APP`, `MaxEnt` using Q-learning as RL step in `MountainCar-
 
 Navigate to `expert_demo.npy` in [lets-do-irl/mountaincar/app/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mountaincar/app/expert_demo) or [lets-do-irl/mountaincar/maxent/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mountaincar/maxent/expert_demo).
 
-Shape of expert's demonstrations is (20, 130, 3); (number of demonstrations, length of demonstrations, state and action of demonstrations)
+Shape of expert's demonstrations is (20, 130, 3); (number of demonstrations, length of demonstrations, states and actions of demonstrations)
 
 If you make demonstrations, Navigate to `make_expert.py` in [lets-do-irl/mountaincar/app/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mountaincar/app/expert_demo) or [lets-do-irl/mountaincar/maxent/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mountaincar/maxent/expert_demo).
 
@@ -142,7 +142,7 @@ We have implemented `GAIL`, `VAIL` using PPO as RL step in `Hopper-v2` environme
 
 Navigate to `expert_demo.p` in [lets-do-irl/mujoco/gail/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mujoco/gail/expert_demo) or [lets-do-irl/mujoco/vail/expert_demo](https://github.com/reinforcement-learning-kr/lets-do-irl/tree/master/mujoco/vail/expert_demo).
 
-Shape of expert's demonstrations is (50000, 14); (number of demonstrations, state and action of demonstrations)
+Shape of expert's demonstrations is (50000, 14); (number of demonstrations, states and actions of demonstrations)
 
 We used demonstrations that get scores between about 2200 and 2600 on average.
 
